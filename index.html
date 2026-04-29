@@ -234,11 +234,22 @@
       .about-grid { text-align: center; }
       #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; }
     }
-    @media (max-width: 640px) {
-      .hero { min-height: auto; padding: 70px 0 50px; }
-      .section { padding: 70px 0 50px; }
+       @media (max-width: 640px) {
+      /* ИСПРАВЛЕНИЕ ШИРИНЫ (оставляем, чтобы текст не сужался) */
+      .hero .container > div,
+      #for-whom .container > div {
+        grid-column: span 12 !important;
+      }
+      
+      /* ТОЛЬКО ОТСТУП ОТ ХЕДЕРА ДО ПОДПИСИ */
+      .hero { min-height: auto; padding-top: 16px; padding-bottom: 40px; }
+      .hero .mono { margin-top: 0; } /* Подпись подтягивается к хедеру */
+      
+      /* Заголовок остаётся на своём расстоянии от подписи */
       .hero h1 { font-size: 1.95rem; line-height: 1.3; }
-      .hero p { font-size: 1rem; }
+      .hero p { font-size: 1rem; margin-top: 8px; }
+      
+      .section { padding: 60px 0 50px; }
       .section h2 { font-size: 1.65rem; margin-bottom: 20px; }
       .section h2::after { bottom: -8px; width: 40px; }
 
@@ -300,7 +311,7 @@
   <section class="hero section">
     <div class="container grid">
       <div style="grid-column: span 9;">
-        <span class="mono">Маркетолог-автоматизатор</span>
+        <span class="mono">Маркетолог-автоматизатор для экспертных, сервисных и онлайн-проектов</span>
         <h1>Разрабатываю сайты, боты, рассылки и воронки так, чтобы они вели к заявке, покупке или следующему продукту</h1>
         <p>Можно обратиться с отдельной задачей: страница на Tilda, бот, рассылка, форма, аудит воронки или A/B-тест. А можно поэтапно выстроить связанную систему вокруг продукта: заявки, доступы, рассылки, аналитика, повторные продажи и клиентский путь.</p>
         <div class="hero-actions">

@@ -171,13 +171,6 @@
     .about-grid { grid-column: span 12; display: grid; grid-template-columns: 4fr 8fr; gap: 40px; align-items: start; }
     .about-photo {
       width: 100%; max-width: 280px; aspect-ratio: 1;
-      border: 1px solid var(--border); border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-sec); font-size: 0.85rem; position: relative; overflow: hidden;
-    }
-     /* ABOUT PHOTO */
-    .about-photo {
-      width: 100%; max-width: 280px; aspect-ratio: 1;
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
@@ -185,11 +178,6 @@
     .about-photo img {
       width: 100%; height: 100%; object-fit: cover;
       display: block;
-    }
-    }
-    .about-photo img {
-      width: 100%; height: 100%; object-fit: cover;
-      border-radius: 16px; display: block; position: relative; z-index: 1;
     }
     .about-header h2 { margin-bottom: 8px; margin-top: 0; }
     .about-text p { margin-bottom: 16px; color: var(--text-sec); overflow-wrap: break-word; }
@@ -232,6 +220,12 @@
       .formats-grid > *:nth-child(3), .comp-grid > *:nth-child(3) { grid-column: span 2; }
     }
     @media (max-width: 768px) {
+      /* ИСПРАВЛЕНИЕ ШИРИНЫ НА МОБИЛКЕ */
+      .hero .container > div,
+      #for-whom .container > div {
+        grid-column: span 12 !important;
+      }
+      
       .hero h1 { font-size: 2.25rem; }
       .cases-grid, .reviews-grid, .contact-grid, .about-grid { grid-template-columns: 1fr; }
       .formats-grid, .comp-grid { grid-template-columns: 1fr; }
@@ -241,18 +235,13 @@
       #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; }
     }
     @media (max-width: 640px) {
-      /* Убираем гигантские отступы на первом экране */
-     { min-height: auto; padding: 60px 0 40px; }
-     }
-      .hero h1 { font-size: 1.85rem; line-height: 1.3; }
+      .hero { min-height: auto; padding: 70px 0 50px; }
+      .section { padding: 70px 0 50px; }
+      .hero h1 { font-size: 1.95rem; line-height: 1.3; }
       .hero p { font-size: 1rem; }
-      
-      /* Отступы секций */
-      .section { padding: 60px 0 40px; }
-      .section h2 { font-size: 1.75rem; margin-bottom: 20px; }
-      .section h2::after { bottom: -8px; width: 48px; }
+      .section h2 { font-size: 1.65rem; margin-bottom: 20px; }
+      .section h2::after { bottom: -8px; width: 40px; }
 
-      /* Гамбургер */
       .menu-toggle { display: flex; }
       .nav { display: none; }
       .mobile-cta { display: none; }
@@ -439,7 +428,6 @@
         <p class="cases-intro">В кейсах я показываю не просто инструменты, а задачи: где нужно было доработать страницу, собрать бота, выстроить продуктовую логику, настроить аналитику или связать несколько элементов вокруг продукта.</p>
       </div>
       <div class="cases-grid">
-        <!-- Case 1 -->
         <div class="card case-card">
           <img src="site.webp" alt="Travel-проект на Tilda" class="case-img" loading="lazy" decoding="async">
           <h3>Travel-проект на Tilda</h3>
@@ -450,7 +438,6 @@
           </div>
           <a href="cases/travel-tilda-support/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a>
         </div>
-        <!-- Case 2 -->
         <div class="card case-card">
           <img src="szs.webp" alt="Инфраструктура эксперта в нише здоровья" class="case-img" loading="lazy" decoding="async">
           <h3>Инфраструктура эксперта в нише здоровья</h3>
@@ -461,7 +448,6 @@
           </div>
           <a href="cases/health-product-infrastructure/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a>
         </div>
-        <!-- Case 3 -->
         <div class="card case-card">
           <img src="opora.webp" alt="Telegram-бот ОПОРА" class="case-img" loading="lazy" decoding="async">
           <h3>Telegram-бот «ОПОРА»</h3>
@@ -472,7 +458,6 @@
           </div>
           <a href="cases/opora-telegram-bot/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a>
         </div>
-        <!-- Case 4 -->
         <div class="card case-card">
           <img src="ab-test.webp" alt="A/B-тест лендинга" class="case-img" loading="lazy" decoding="async">
           <h3>A/B-тест лендинга</h3>
@@ -547,7 +532,6 @@
     <div class="container grid">
       <div class="about-grid">
         <div>
-          <!-- Фото с градиентным наложением -->
           <div class="about-photo">
             <img src="iam.webp" alt="Мария Архипова" loading="lazy" decoding="async">
           </div>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мария Архипова | Маркетолог-автоматизатор</title>
+  <meta name="description" content="Маркетолог-автоматизатор: сайты на Tilda, боты, рассылки, воронки и системы вокруг продукта. От первого касания до повторной покупки.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ========== ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ ========== */
+    :root {
+      --bg: #0B0C10;
+      --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08);
+      --text: #E5E7EB;
+      --text-sec: #9CA3AF;
+      --accent: #3B82F6;
+      --accent-gradient: linear-gradient(90deg, #a855f7, #eab308);
+      --card-hover-shadow: rgba(59, 130, 246, 0.15);
+      --font: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --gap: 24px;
+      --max: 1280px;
+      --header-h: 64px;
+    }
+
+    [data-theme="light"] {
+      --bg: #F8F9FA;
+      --surface: rgba(0,0,0,0.04);
+      --border: rgba(0,0,0,0.08);
+      --text: #1F2937;
+      --text-sec: #6B7280;
+      --accent: #2563EB;
+      --accent-gradient: linear-gradient(90deg, #9333ea, #ca8a04);
+      --card-hover-shadow: rgba(37, 99, 235, 0.12);
+    }
+
+    /* ========== БАЗОВЫЕ СТИЛИ ========== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      padding-top: var(--header-h);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
+    .mono { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.05em; color: var(--text-sec); text-transform: uppercase; }
+    .tag { display: inline-block; background: var(--surface); border: 1px solid var(--border); padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; margin: 4px 4px 0 0; }
+    
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 500; transition: 0.2s; border: none; cursor: pointer; font-size: 0.95rem; overflow-wrap: break-word; }
+    .btn:hover { background: var(--accent); filter: brightness(1.1); transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--accent); }
+    .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+    
+    .section { padding: 90px 0 80px; border-bottom: 1px solid var(--border); transition: border-color 0.3s ease; }
+    .section:last-child { border: none; padding-bottom: 40px; }
+    
+    /* Заголовки секций */
+    .section h2 {
+      font-size: 2.1rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 28px;
+      position: relative;
+      display: inline-block;
+      line-height: 1.25;
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px; left: 0;
+      width: 56px; height: 2px;
+      background: var(--accent-gradient);
+      border-radius: 2px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      overflow-wrap: break-word;
+    }
+    .card h3 { font-size: 1.05rem; margin: 12px 0 8px; }
+    .card p { font-size: 0.9rem; color: var(--text-sec); }
+    .card .price { display: block; font-weight: 600; color: var(--text); margin: 8px 0 12px; }
+
+    /* HEADER */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+      background: var(--bg); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border); z-index: 100;
+      display: flex; align-items: center;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; max-width: var(--max); margin: 0 auto; padding: 0 20px; width: 100%; }
+    .logo { font-weight: 600; font-size: 1rem; }
+    .nav { display: flex; gap: 18px; align-items: center; }
+    .nav a { color: var(--text-sec); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav a:hover { color: var(--text); }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .theme-toggle { padding: 6px 10px; font-size: 1.1rem; line-height: 1; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border); color: var(--text); cursor: pointer; }
+    .menu-toggle { display: none; background: transparent; border: 1px solid var(--border); color: var(--text); font-size: 1.3rem; cursor: pointer; padding: 6px 10px; border-radius: 6px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      position: fixed; top: var(--header-h); left: 0; right: 0; bottom: 0;
+      background: var(--bg); padding: 24px 20px; z-index: 99;
+      transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex; flex-direction: column; gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      font-size: 1.15rem; color: var(--text); text-decoration: none; padding: 16px 0;
+      border-bottom: 1px solid var(--border); display: block; transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero { min-height: calc(100vh - var(--header-h)); display: flex; align-items: center; }
+    .hero h1 { font-size: 2.8rem; line-height: 1.25; margin: 12px 0 20px; max-width: 850px; overflow-wrap: break-word; }
+    .hero p { font-size: 1.1rem; color: var(--text-sec); max-width: 720px; margin-bottom: 28px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* FOR WHOM */
+    .for-list { display: flex; flex-direction: column; gap: 12px; margin: 20px 0 24px; }
+    .for-item { background: var(--surface); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.95rem; overflow-wrap: break-word; }
+    .for-final { color: var(--text-sec); font-style: italic; }
+
+    /* FORMATS */
+    .formats-intro { color: var(--text-sec); margin-bottom: 32px; max-width: 760px; }
+    .formats-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+    .formats-card { border-left: 3px solid var(--accent); transition: 0.3s; }
+    .formats-card:hover { border-color: var(--accent); box-shadow: 0 4px 24px var(--card-hover-shadow); transform: translateY(-3px); }
+
+    /* COMPETENCIES */
+    .comp-intro { color: var(--text-sec); margin-bottom: 32px; max-width: 760px; }
+    .comp-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+    .comp-card { background: transparent; transition: 0.2s; }
+    .comp-card:hover { border-color: var(--accent); }
+
+    /* CASES */
+    .cases-intro { color: var(--text-sec); margin-bottom: 32px; max-width: 760px; }
+    .cases-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+    .case-card { display: flex; flex-direction: column; }
+    .case-img {
+      width: 100%; height: 140px; object-fit: cover;
+      background: linear-gradient(135deg, #1a1b23, #252830);
+      border-radius: 8px; margin-bottom: 14px; display: block;
+    }
+    [data-theme="light"] .case-img { background: linear-gradient(135deg, #e5e7eb, #d1d5db); }
+    .case-card h3 { margin-bottom: 4px; }
+    .case-card .mono { margin-bottom: 10px; display: block; }
+    .case-tags { margin: 12px 0; }
+    .case-btn { margin-top: auto; }
+
+    /* ABOUT */
+    .about-grid { grid-column: span 12; display: grid; grid-template-columns: 4fr 8fr; gap: 40px; align-items: start; }
+    .about-photo {
+      width: 100%; max-width: 280px; aspect-ratio: 1;
+      border: 1px solid var(--border); border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-sec); font-size: 0.85rem; position: relative; overflow: hidden;
+    }
+     /* ABOUT PHOTO */
+    .about-photo {
+      width: 100%; max-width: 280px; aspect-ratio: 1;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .about-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+    }
+    .about-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      border-radius: 16px; display: block; position: relative; z-index: 1;
+    }
+    .about-header h2 { margin-bottom: 8px; margin-top: 0; }
+    .about-text p { margin-bottom: 16px; color: var(--text-sec); overflow-wrap: break-word; }
+    .about-text p:last-child { margin-bottom: 24px; }
+
+    /* REVIEWS */
+    .reviews-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); margin-top: 8px; }
+    .review-card { display: flex; flex-direction: column; gap: 16px; }
+    .review-text { color: var(--text); font-size: 0.95rem; line-height: 1.7; overflow-wrap: break-word; }
+    .review-author { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+    .review-author span { color: var(--text-sec); font-size: 0.9rem; }
+    .review-tags { margin-top: 4px; }
+
+    /* PROCESS */
+    .process-list { counter-reset: step; list-style: none; }
+    .process-list li { counter-increment: step; padding: 20px 0 20px 44px; position: relative; border-left: 1px solid var(--border); }
+    .process-list li::before { content: counter(step); position: absolute; left: -13px; top: 20px; width: 26px; height: 26px; background: var(--bg); border: 1px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.7rem; color: var(--accent); transition: background 0.3s, border-color 0.3s; }
+    .process-list strong { display: block; margin-bottom: 6px; color: var(--text); }
+
+    /* CONTACT */
+    .contact-grid { grid-column: span 12; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .contact-text p { color: var(--text-sec); margin-bottom: 20px; }
+    .contact-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    .contact-note { font-size: 0.85rem; color: var(--text-sec); font-style: italic; }
+
+    /* BACK TO TOP */
+    #back-to-top {
+      position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: #fff; border: none; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0; pointer-events: none;
+      transform: translateY(10px); transition: all 0.3s ease; z-index: 90; font-size: 1.2rem;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #back-to-top:hover { filter: brightness(1.1); transform: translateY(-3px); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 1024px) {
+      .formats-grid, .comp-grid { grid-template-columns: repeat(2, 1fr); }
+      .formats-grid > *:nth-child(3), .comp-grid > *:nth-child(3) { grid-column: span 2; }
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.25rem; }
+      .cases-grid, .reviews-grid, .contact-grid, .about-grid { grid-template-columns: 1fr; }
+      .formats-grid, .comp-grid { grid-template-columns: 1fr; }
+      .formats-grid > *, .comp-grid > * { grid-column: span 1 !important; }
+      .about-photo { max-width: 220px; margin: 0 auto 24px; }
+      .about-grid { text-align: center; }
+      #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; }
+    }
+    @media (max-width: 640px) {
+      /* Убираем гигантские отступы на первом экране */
+      .hero { min-height: auto; padding: 60px 0 40px; }
+      .hero h1 { font-size: 1.85rem; line-height: 1.3; }
+      .hero p { font-size: 1rem; }
+      
+      /* Отступы секций */
+      .section { padding: 60px 0 40px; }
+      .section h2 { font-size: 1.75rem; margin-bottom: 20px; }
+      .section h2::after { bottom: -8px; width: 48px; }
+
+      /* Гамбургер */
+      .menu-toggle { display: flex; }
+      .nav { display: none; }
+      .mobile-cta { display: none; }
+      
+      .container { padding: 0 16px; }
+      .contact-btns { flex-direction: column; align-items: stretch; }
+      .contact-btns .btn { width: 100%; justify-content: center; }
+      .about-text { text-align: left; }
+      #process .container > div { grid-column: span 12 !important; }
+    }
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn { width: 100%; justify-content: center; }
+    }
+    @media (hover: none) {
+      .card:hover, .btn:hover { transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">Мария Архипова</div>
+      <nav class="nav">
+        <a href="#competencies">Что делаю</a>
+        <a href="#cases">Кейсы</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#about">Обо мне</a>
+        <a href="#formats">Форматы работы</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">🌙</button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Открыть меню">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="#competencies">Что делаю</a>
+    <a href="#cases">Кейсы</a>
+    <a href="#reviews">Отзывы</a>
+    <a href="#about">Обо мне</a>
+    <a href="#formats">Форматы работы</a>
+    <a href="#contact">Контакты</a>
+    <a href="#contact" style="color: var(--accent); font-weight: 500; border: none; margin-top: 10px;">Обсудить задачу</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero section">
+    <div class="container grid">
+      <div style="grid-column: span 9;">
+        <span class="mono">Маркетолог-автоматизатор</span>
+        <h1>Дорабатываю сайты, боты, рассылки и воронки так, чтобы они вели к заявке, покупке или следующему продукту</h1>
+        <p>Можно обратиться с отдельной задачей: страница на Tilda, бот, рассылка, форма, аудит воронки или A/B-тест. А можно поэтапно выстроить связанную систему вокруг продукта: заявки, доступы, рассылки, аналитика, повторные продажи и клиентский путь.</p>
+        <div class="hero-actions">
+          <a href="#cases" class="btn">Посмотреть кейсы</a>
+          <a href="#contact" class="btn btn-outline">Обсудить задачу</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR WHOM -->
+  <section class="section" id="for-whom">
+    <div class="container grid">
+      <div style="grid-column: span 8;">
+        <h2>Работаю с проектами, где продукт уже есть, но цифровые инструменты не дают нужного результата</h2>
+        <div class="for-list">
+          <div class="for-item">Сайт есть, но заявок мало, они нецелевые или непонятно, из каких страниц и форм они приходят.</div>
+          <div class="for-item">Бот есть, но пользователи не доходят до оплаты, бросают прохождение, не возвращаются к материалам или не переходят к следующему продукту.</div>
+          <div class="for-item">Рассылки отправляются, но не встроены в запуск, повторные продажи или возврат клиентов.</div>
+          <div class="for-item">Формы есть, но заявки приходят без полезных данных: непонятно, откуда человек пришёл, какой продукт его интересует и какой следующий шаг ему нужен.</div>
+          <div class="for-item">Аналитика подключена, но по ней сложно принять решение: что менять на странице, в боте, в рассылке или в клиентском пути.</div>
+          <div class="for-item">Продуктовая линейка есть, но переходы между продуктами не выстроены, и часть клиентов теряется после первой покупки.</div>
+        </div>
+        <p class="for-final">Я помогаю привести сайт, бота, рассылки, формы, воронки и аналитику к рабочей логике: чтобы клиент понимал следующий шаг, а проект видел данные и мог управлять заявками, продажами и повторными касаниями.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMATS -->
+  <section class="section" id="formats">
+    <div class="container grid">
+      <div style="grid-column: span 12;">
+        <h2>Подключаюсь на разных этапах проекта или воронки</h2>
+        <p class="formats-intro">Можно прийти с конкретной задачей: доработать страницу на Tilda, собрать бота, подготовить рассылку, настроить форму, проверить аналитику или разобрать проблемный участок воронки.<br><br>Если проекту нужна связанная система, я могу поэтапно объединить несколько элементов вокруг продукта: сайт, бота, рассылки, доступы, формы, аналитику и повторные касания.</p>
+      </div>
+      <div class="formats-grid">
+        <div class="card formats-card">
+          <span class="mono">КОНСУЛЬТАЦИЯ</span>
+          <span class="price">от 3 000 ₽ / час</span>
+          <p>Разбор задачи, текущей страницы, бота, рассылки, воронки или идеи запуска. Подходит, если нужно понять, с чего начать, что исправлять первым и какой формат работы выбрать.</p>
+        </div>
+        <div class="card formats-card">
+          <span class="mono">АУДИТ</span>
+          <span class="price">от 5 000 ₽</span>
+          <p>Разбор структуры, пользовательского пути, форм, кнопок, сценариев, точек потери и следующего действия. На выходе: список проблемных мест и приоритетных правок.</p>
+        </div>
+        <div class="card formats-card">
+          <span class="mono">ТОЧЕЧНАЯ ЗАДАЧА</span>
+          <span class="price">от 5 000 ₽</span>
+          <p>Доработка страницы, формы, рассылки, адаптива, аналитики или отдельного участка воронки.</p>
+        </div>
+        <div class="card formats-card">
+          <span class="mono">ОТДЕЛЬНЫЙ ПРОЕКТ</span>
+          <span class="price">от 15 000 ₽</span>
+          <p>Бот, сценарий, посадочная на Tilda, A/B-тест, серия рассылок, автоматизированная программа или воронка под запуск.</p>
+        </div>
+        <div class="card formats-card">
+          <span class="mono">СИСТЕМА ВОКРУГ ПРОДУКТА</span>
+          <span class="price">от 70 000 ₽</span>
+          <p>Связка сайта, бота, рассылок, доступов, форм, аналитики и повторных касаний вокруг экспертного продукта, клуба или программы.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETENCIES -->
+  <section class="section" id="competencies">
+    <div class="container grid">
+      <div style="grid-column: span 12;">
+        <h2>Из чего складывается рабочая система</h2>
+        <p class="comp-intro">Сайт, бот, рассылки, формы, воронки и аналитика работают сильнее, когда связаны между собой. Я помогаю выстроить эту связку вокруг продукта и клиентского пути.</p>
+      </div>
+      <div class="comp-grid">
+        <div class="card comp-card">
+          <span class="mono">01 // САЙТЫ</span>
+          <h3>Сайты и посадочные на Tilda</h3>
+          <p>Создаю и дорабатываю страницы на Tilda под запуск, рекламу и заявки: структура, адаптив, формы, кнопки, Zero Block, подключение аналитики и передача заявок в CRM.</p>
+        </div>
+        <div class="card comp-card">
+          <span class="mono">02 // БОТЫ И АВТОМАТИЗАЦИЯ</span>
+          <h3>Боты и сценарии</h3>
+          <p>Делаю Telegram, VK и MAX-боты: меню, сценарии, логика доступа, оплаты, напоминания, анкеты, ветвления и рассылки.</p>
+          <p style="margin-top:8px;">Платформу подбираю под задачу: BotHunter, Leadteh, BotHelp, SaleBot или другой подходящий сервис.</p>
+        </div>
+        <div class="card comp-card">
+          <span class="mono">03 // КЛИЕНТСКИЙ ПУТЬ</span>
+          <h3>Клиентский путь и повторные продажи</h3>
+          <p>Помогаю понять, что происходит после первого касания: как человек попадает в продукт, где теряется, когда возвращается, что покупает дальше и какие касания ему нужны.</p>
+        </div>
+        <div class="card comp-card">
+          <span class="mono">04 // АУДИТ И АНАЛИТИКА</span>
+          <h3>Аудит страниц, ботов и воронок</h3>
+          <p>Разбираю готовые страницы, боты и цепочки: что понятно пользователю, где путь обрывается, какие кнопки и формы мешают действию, где нужен промежуточный шаг или напоминание.</p>
+        </div>
+        <div class="card comp-card">
+          <span class="mono">05 // ФОРМЫ И ДАННЫЕ</span>
+          <h3>Формы, заявки и источники обращений</h3>
+          <p>Настраиваю формы и передачу данных так, чтобы заявка приходила с полезной информацией: с какой страницы человек пришёл, по какой форме отправил запрос, какой продукт его интересует и какой источник привёл обращение.</p>
+          <p style="margin-top:8px;">Если в проекте используется CRM, проверяю, чтобы данные из форм корректно передавались в нужные поля и не терялись на пути.</p>
+        </div>
+        <div class="card comp-card">
+          <span class="mono">06 // EMAIL-РАССЫЛКИ</span>
+          <h3>Email-рассылки в UniSender</h3>
+          <p>Готовлю email-рассылки в UniSender: верстка письма, шаблон, ссылки, прехедер, сегменты, расписание отправки и проверка перед запуском.</p>
+        </div>
+        <div class="card comp-card">
+          <span class="mono">07 // ТЕХНИЧЕСКАЯ БАЗА</span>
+          <h3>Техническая база сайта и почты</h3>
+          <p>Помогаю привести в порядок домен, SSL, DNS, Google Workspace и базовые настройки почты, чтобы сайт открывался, формы работали, а письма не ломались на техническом уровне.</p>
+        </div>
+        <div class="card comp-card">
+          <span class="mono">08 // ПРОДУКТОВАЯ СИСТЕМА</span>
+          <h3>Цифровая система для клуба или программы</h3>
+          <p>Помогаю упаковать экспертный продукт в понятную цифровую систему: демо-доступ, платная версия, материалы, бот, напоминания, рассылки, оплаты и переходы к следующим продуктам.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASES -->
+  <section class="section" id="cases">
+    <div class="container grid">
+      <div style="grid-column: span 12;">
+        <h2>Избранные кейсы</h2>
+        <p class="cases-intro">В кейсах я показываю не просто инструменты, а задачи: где нужно было доработать страницу, собрать бота, выстроить продуктовую логику, настроить аналитику или связать несколько элементов вокруг продукта.</p>
+      </div>
+      <div class="cases-grid">
+        <!-- Case 1 -->
+        <div class="card case-card">
+          <img src="assets/site.webp" alt="Travel-проект на Tilda" class="case-img">
+          <h3>Travel-проект на Tilda</h3>
+          <span class="mono">24+ месяца поддержки</span>
+          <p>Верстка, адаптив, формы, передача заявок в CRM, UTM, A/B-тесты, email-рассылки, DNS и Google Workspace.</p>
+          <div class="case-tags">
+            <span class="tag">Tilda</span><span class="tag">Zero Block</span><span class="tag">Передача заявок</span><span class="tag">Метрика</span><span class="tag">UniSender</span><span class="tag">Google Workspace</span>
+          </div>
+          <a href="cases/travel-tilda-support/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a>
+        </div>
+        <!-- Case 2 -->
+        <div class="card case-card">
+          <img src="assets/szs.webp" alt="Инфраструктура эксперта в нише здоровья" class="case-img">
+          <h3>Инфраструктура эксперта в нише здоровья</h3>
+          <span class="mono">Клуб + боты + LTV</span>
+          <p>Автоматизированные программы, оплаты, доступы, рассылки, напоминания, метрики и возвратные касания.</p>
+          <div class="case-tags">
+            <span class="tag">Telegram</span><span class="tag">VK</span><span class="tag">CVM</span><span class="tag">LTV</span><span class="tag">Рассылки</span><span class="tag">Клиентский путь</span>
+          </div>
+          <a href="cases/health-product-infrastructure/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a>
+        </div>
+        <!-- Case 3 -->
+        <div class="card case-card">
+          <img src="assets/opora.webp" alt="Telegram-бот ОПОРА" class="case-img">
+          <h3>Telegram-бот «ОПОРА»</h3>
+          <span class="mono">Сценарная архитектура</span>
+          <p>Предпроектный анализ, сценарии, ветвления, напоминания, тестирование и запуск Telegram-бота для экспертного проекта.</p>
+          <div class="case-tags">
+            <span class="tag">Telegram</span><span class="tag">Сценарии</span><span class="tag">UX-пути</span><span class="tag">BotHunter</span><span class="tag">Запуск</span>
+          </div>
+          <a href="cases/opora-telegram-bot/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a>
+        </div>
+        <!-- Case 4 -->
+        <div class="card case-card">
+          <img src="assets/ab-test.webp" alt="A/B-тест лендинга" class="case-img">
+          <h3>A/B-тест лендинга</h3>
+          <span class="mono">Travel-направление</span>
+          <p>Подготовка двух версий, цели, формы, сверка заявок, Вебвизор, карты кликов и скролла, выводы по поведению и заявкам.</p>
+          <div class="case-tags">
+            <span class="tag">A/B-тест</span><span class="tag">Я.Метрика</span><span class="tag">CRM-сверка</span><span class="tag">UX-аналитика</span><span class="tag">Tilda</span>
+          </div>
+          <a href="cases/ab-test-landing/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section" id="reviews">
+    <div class="container grid">
+      <div style="grid-column: span 12;">
+        <h2>Что говорят клиенты</h2>
+        <p style="color:var(--text-sec); max-width:760px;">
+          Отзывы подтверждают не только технический результат, но и способ работы: быстрое погружение в задачу, инициативу, понятную коммуникацию, поиск проблемных точек и устойчивую работу собранной системы.
+        </p>
+      </div>
+      <div class="reviews-grid">
+        <div class="card review-card">
+          <p class="review-text">«Фактически Мария с нуля создала инфраструктуру моих продуктов. Причём не только технически.»</p>
+          <p class="review-text">«На данный момент у меня работает постоянный клуб на основе чат-бота, созданного Марией. Ежемесячно его основная программа обновляется. Также работают 2 чат-бота с законченными программами.»</p>
+          <div class="review-author">
+            <strong>Елена Девяткина</strong>
+            <span>Эксперт в нише здоровья и телесных практик</span>
+          </div>
+          <div class="review-tags">
+            <span class="tag">Инфраструктура продуктов</span>
+            <span class="tag">Боты</span>
+            <span class="tag">Рассылки</span>
+            <span class="tag">CVM</span>
+          </div>
+        </div>
+        <div class="card review-card">
+          <p class="review-text">«Мария с самого начала была максимально вовлечена в процесс: уточняла задачу, предлагала свои идеи и решения. Всегда на связи, отвечает быстро и по делу, всё понятно объясняет без технического перегруза.»</p>
+          <p class="review-text">«Бот работает стабильно, аккуратно реализован функционал, учтены все детали. Очень комфортное сотрудничество, спокойно, надёжно и без лишнего стресса.»</p>
+          <div class="review-author">
+            <strong>Татьяна</strong>
+            <span>Автор и основатель Telegram-бота «ОПОРА»</span>
+          </div>
+          <div class="review-tags">
+            <span class="tag">Telegram-бот</span>
+            <span class="tag">Сценарии</span>
+            <span class="tag">BotHunter</span>
+            <span class="tag">Запуск</span>
+          </div>
+        </div>
+        <div class="card review-card">
+          <p class="review-text">«Мария отличный исполнитель! Быстро вникает в задачу, предлагает решения, всё выполняет в срок и находит проблемные точки, которые мы пропустили. Однозначно могу рекомендовать для ваших задач.»</p>
+          <div class="review-author">
+            <strong>Ксения К.</strong>
+            <span>Операционный менеджер проекта на Tilda</span>
+          </div>
+          <div class="review-tags">
+            <span class="tag">Tilda</span>
+            <span class="tag">Поддержка сайта</span>
+            <span class="tag">Проблемные точки</span>
+            <span class="tag">Решения</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container grid">
+      <div class="about-grid">
+        <div>
+          <!-- Фото с градиентным наложением -->
+          <div class="about-photo">
+            <img src="assets/iam.webp" alt="Мария Архипова">
+          </div>
+          <div class="about-header">
+            <h2>Обо мне</h2>
+          </div>
+        </div>
+        <div class="about-text">
+          <p>Меня зовут Мария Архипова. Я маркетолог-автоматизатор: помогаю превращать идеи, курсы, клубы и программы в рабочие цифровые продукты: ботов, страницы, рассылки, воронки и системы вокруг продукта.</p>
+          <p>Моя сильная зона — клиентский путь. В проектах я смотрю, где пользователь не понимает следующий шаг, бросает прохождение, не доходит до оплаты, теряется между продуктами или сталкивается с лишней сложностью, которую можно заранее продумать и автоматизировать.</p>
+          <p>Работа обычно начинается с вопросов: кто приходит, зачем, что человек уже знает, какой шаг должен сделать, где может застрять и что нужно показать ему дальше. После этого начинается реализация: сценарии, страницы, формы, рассылки, доступы, проверки и запуск.</p>
+          <p>Более 7 лет работаю в маркетинге, а опыт в проектном менеджменте превышает 10 лет.</p>
+          <p>Во время магистерского исследования по социальной рекламе я много работала с темой восприятия сообщений. Один из значимых ответов участников хорошо сформулировал проблему, которую потом часто замечала в маркетинге: человек не чувствует, что сообщение обращено к нему.</p>
+          <p>Поэтому в проектах важно не только выбрать инструмент, но и понять восприятие пользователя: что он понимает, где теряется и почему, какой следующий шаг готов совершить.</p>
+          <p>Ко мне можно прийти как с небольшой задачей, так и с более масштабным проектом, который нужно собрать поэтапно. Цель работы: снять с клиента лишнюю техническую нагрузку и превратить продукт в удобный, понятный сценарий, где пользователь не теряется, видит пользу и сохраняет интерес к продукту.</p>
+          <a href="#contact" class="btn">Обсудить задачу</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" id="process">
+    <div class="container grid">
+      <div style="grid-column: span 12;">
+        <h2>Как я работаю</h2>
+      </div>
+      <div style="grid-column: span 8;">
+        <ul class="process-list">
+          <li><strong>Разбираю задачу и текущую систему</strong>Смотрю, что уже есть: сайт, бот, рассылки, формы, продукт, база, аналитика, точки входа и проблемные места.</li>
+          <li><strong>Определяю нужный формат работы</strong>Иногда достаточно консультации, одной правки или аудита. Иногда нужен отдельный проект: бот, лендинг, рассылка, A/B-тест. Иногда проекту нужна система вокруг продукта.</li>
+          <li><strong>Продумываю пользовательский путь</strong>Фиксирую, как человек приходит, что видит, где оставляет заявку или покупает, как получает доступ, где возвращается и какой следующий шаг ему нужен.</li>
+          <li><strong>Делаю техническую реализацию</strong>Дорабатываю страницы, собираю ботов, настраиваю формы, рассылки, UTM, цели, доступы и другие рабочие элементы.</li>
+          <li><strong>Проверяю и передаю в работу</strong>Проверяю адаптив, кнопки, формы, заявки, ссылки, рассылки, доступы и базовую аналитику. Если нужно, предлагаю следующую итерацию.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container grid">
+      <div class="contact-grid">
+        <div class="contact-text">
+          <h2>Обсудить задачу</h2>
+          <p>Напишите, что у вас уже есть: сайт, бот, продукт, рассылка, база или идея запуска. Я посмотрю задачу и предложу подходящий формат: консультация, точечная доработка, аудит воронки, бот, Tilda-страница, рассылка, A/B-тест или система вокруг продукта.</p>
+          <div class="contact-btns">
+            <a href="https://t.me/ArkhiMaria" class="btn">Написать в Telegram</a>
+            <a href="https://max.ru/u/f9LHodD0cOIbyM5I6qkOD8eoebfJF6sCIjzU195WIeKnfzPxCQheEeAbpR4" class="btn btn-outline">Написать в MAX</a>
+            <a href="mailto:marimaox@gmail.com" class="btn btn-outline">Написать на email</a>
+          </div>
+          <p class="contact-note">В первом сообщении можно коротко написать: что уже есть, какая задача, сроки и удобный способ связи.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACK TO TOP -->
+  <button id="back-to-top" aria-label="Наверх">↑</button>
+
+  <!-- JS -->
+  <script>
+    // Тема
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      toggle.textContent = theme === 'light' ? '☀️' : '🌙';
+      localStorage.setItem('theme', theme);
+    }
+    applyTheme(saved || system);
+    toggle.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
+
+    // Гамбургер-меню
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuToggle.textContent = isOpen ? '✕' : '☰';
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        menuToggle.textContent = '☰';
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Кнопка "Наверх"
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+</body>
+</html>

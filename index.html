@@ -604,21 +604,26 @@
   <!-- BACK TO TOP -->
   <button id="back-to-top" aria-label="Наверх">↑</button>
 
-  <!-- JS -->
+    <!-- JS -->
   <script>
     // Тема
     const toggle = document.getElementById('theme-toggle');
     const html = document.documentElement;
     const saved = localStorage.getItem('theme');
-    const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     
     function applyTheme(theme) {
       html.setAttribute('data-theme', theme);
       toggle.textContent = theme === 'light' ? '☀️' : '🌙';
       localStorage.setItem('theme', theme);
     }
-    applyTheme(saved || system);
-    toggle.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
+    
+    // По умолчанию всегда тёмная, если пользователь не менял вручную
+    applyTheme(saved || 'dark');
+    
+    toggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    });
 
     // Гамбургер-меню
     const menuToggle = document.getElementById('menu-toggle');

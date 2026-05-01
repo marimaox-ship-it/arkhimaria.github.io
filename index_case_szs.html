@@ -483,38 +483,25 @@
     </div>
   </section>
 
+  <!-- Кнопка "Наверх" -->
+  <button id="back-to-top" aria-label="Наверх">↑</button>
+
   <script>
+    // Тема
     const t=document.getElementById('themeToggle'),h=document.documentElement;
     const s=localStorage.getItem('theme');
     function a(th){h.dataset.theme=th;t.textContent=th==='light'?'☀️':'🌙';localStorage.setItem('theme',th)}
     a(s||'dark');
     t.addEventListener('click',()=>a(h.dataset.theme==='light'?'dark':'light'));
 
+    // Анимация шагов
     const steps=document.querySelectorAll('.j-step');
     const obs=new IntersectionObserver(es=>{
       es.forEach(e=>{if(e.isIntersecting){const i=Array.from(steps).indexOf(e.target);setTimeout(()=>e.target.classList.add('visible'),i*80)}});
     },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
     steps.forEach(s=>obs.observe(s));
 
-    // ===== КНОПКА "НАВЕРХ" =====
-    const backToTop = document.getElementById('back-to-top');
-    if (backToTop) {
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 400) {
-          backToTop.classList.add('visible');
-        } else {
-          backToTop.classList.remove('visible');
-        }
-      }, { passive: true });
-
-      backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
-  </script>
-
-    <script>
-   // Кнопка "Наверх"
+    // Кнопка "Наверх"
     const backToTop = document.getElementById('back-to-top');
     if (backToTop) {
       window.addEventListener('scroll', () => {

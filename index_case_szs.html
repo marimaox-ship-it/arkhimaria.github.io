@@ -506,6 +506,22 @@
       es.forEach(e=>{if(e.isIntersecting){const i=Array.from(steps).indexOf(e.target);setTimeout(()=>e.target.classList.add('visible'),i*80)}});
     },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
     steps.forEach(s=>obs.observe(s));
+
+    // ===== КНОПКА "НАВЕРХ" =====
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      }, { passive: true });
+
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   </script>
 
    <!-- Кнопка "Наверх" -->

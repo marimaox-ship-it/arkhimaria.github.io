@@ -514,26 +514,21 @@
   </script>
 
     <script>
-    // Кнопка "Наверх" — минимальная рабочая версия
-    (function(){
-      const btn = document.getElementById('back-to-top');
-      if(!btn) return;
-      window.addEventListener('scroll', function(){
-        if(window.scrollY > 400){
-          btn.style.opacity = '1';
-          btn.style.visibility = 'visible';
-          btn.style.transform = 'translateY(0)';
+   // Кнопка "Наверх"
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+          backToTop.classList.add('visible');
         } else {
-          btn.style.opacity = '0';
-          btn.style.visibility = 'hidden';
-          btn.style.transform = 'translateY(10px)';
+          backToTop.classList.remove('visible');
         }
-      }, {passive: true});
-      btn.addEventListener('click', function(e){
-        e.preventDefault();
-        window.scrollTo({top: 0, behavior: 'smooth'});
+      }, { passive: true });
+
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
-    })();
+    }
   </script>
 </body>
 </html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кейс: A/B тест лендинга премиального travel-продукта | Мария Архипова</title>
+  <meta name="description" content="A/B тест лендинга премиального travel-продукта. +72% к конверсии после аудита, доработки страницы и повторного теста.">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ========== ПЕРЕМЕННЫЕ ========== */
+    :root {
+      --bg: #0B0C10; --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08); --text: #E5E7EB;
+      --text-sec: #9CA3AF; --accent: #14b8a6;
+      --accent-gradient: linear-gradient(90deg,#14b8a6,#f472b6,#f97316);
+      --card-hover-shadow: rgba(20,184,166,0.15);
+      --font: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --gap: 24px; --max: 1280px; --header-h: 64px;
+    }
+    [data-theme="light"] {
+      --bg: #F8F9FA; --surface: rgba(0,0,0,0.04);
+      --border: rgba(0,0,0,0.08); --text: #1F2937;
+      --text-sec: #6B7280; --accent: #0f766e;
+      --card-hover-shadow: rgba(13,148,136,0.12);
+    }
+
+    /* ========== БАЗА ========== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { max-width: 100vw; overflow-x: hidden; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); line-height: 1.6;
+      padding-top: var(--header-h); transition: background 0.3s, color 0.3s;
+      overflow-wrap: break-word;
+    }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; width: 100%; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
+    .mono { font-family: var(--mono); font-size: .75rem; letter-spacing: .05em; color: var(--text-sec); text-transform: uppercase; }
+    .tag { display: inline-block; background: var(--surface); border: 1px solid var(--border); padding: 4px 8px; border-radius: 4px; font-size: .7rem; margin: 4px 4px 0 0; }
+    
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 500; transition: 0.2s; border: none; cursor: pointer; font-size: .95rem; }
+    .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--accent); }
+    .btn-lg { padding: 14px 28px; font-size: 1rem; }
+    
+    .section { padding: 90px 0 80px; border-bottom: 1px solid var(--border); }
+    .section:last-child { border: none; padding-bottom: 40px; }
+    .section h2 {
+      font-size: 2.1rem; font-weight: 600; margin: 0 0 28px;
+      position: relative; display: inline-block; line-height: 1.25;
+    }
+    .section h2::after {
+      content: ''; position: absolute; bottom: -10px; left: 0;
+      width: 56px; height: 2px; background: var(--accent-gradient); border-radius: 2px;
+    }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: .2s; min-width: 0; }
+    .card:hover { border-color: var(--accent); box-shadow: 0 4px 24px var(--card-hover-shadow); transform: translateY(-3px); }
+    .card h3 { font-size: 1.05rem; margin: 12px 0 8px; }
+    .card p { font-size: .9rem; color: var(--text-sec); }
+    .card ul { margin: 8px 0 0 18px; color: var(--text-sec); font-size: .9rem; }
+    .card li { margin-bottom: 6px; }
+
+    /* HEADER */
+    header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: var(--bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; }
+    .hdr { display: flex; justify-content: space-between; align-items: center; max-width: var(--max); margin: 0 auto; padding: 0 20px; width: 100%; }
+    .logo { font-weight: 600; font-size: 1rem; color: var(--text); text-decoration: none; }
+    .theme-btn { padding: 6px 10px; font-size: 1.1rem; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border); color: var(--text); cursor: pointer; flex-shrink: 0; }
+
+    /* HERO & KPI */
+    .case-hero h1 { font-size: 2.4rem; line-height: 1.3; margin: 16px 0 20px; }
+    .case-hero .subtitle { font-size: 1.1rem; color: var(--text-sec); margin-bottom: 24px; max-width: 800px; }
+    .kpi-wrap { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; }
+    .kpi-card strong { display: block; font-size: 2.2rem; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 4px; }
+    .kpi-card span { font-size: .85rem; color: var(--text-sec); }
+
+    /* VERSIONS */
+    .versions-grid { grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+    .version-card { border-left: 3px solid var(--border); }
+    .version-a { border-left-color: var(--accent); }
+    .version-b { border-left-color: var(--text-sec); }
+
+    /* HYPOTHESIS FLOW */
+    .hypothesis-flow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .hypothesis-item { background: var(--bg); border: 1px solid var(--border); padding: 8px 14px; border-radius: 8px; font-size: .9rem; white-space: nowrap; }
+    .hypothesis-arrow { color: var(--accent); font-size: 1.2rem; flex-shrink: 0; }
+
+    /* STEPS */
+    .steps-grid { grid-template-columns: repeat(5, 1fr); gap: var(--gap); }
+    .step-card { text-align: center; }
+    .step-num { display: block; font-size: 1.5rem; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+
+    /* BEFORE / AFTER */
+    .ba-grid { grid-template-columns: repeat(2, 1fr); gap: var(--gap); margin-bottom: 32px; }
+    .ba-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .ba-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; color: var(--text); }
+    .ba-list { list-style: none; padding: 0; margin: 0; }
+    .ba-list li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: .9rem; color: var(--text-sec); }
+    .ba-list li:last-child { border-bottom: none; }
+    .ba-list li::before { content: '•'; color: var(--accent); margin-right: 8px; }
+
+    /* VISUAL */
+    .visual-wrapper { text-align: center; }
+    .visual-img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); display: block; }
+    .visual-caption { font-size: .85rem; color: var(--text-sec); margin-top: 12px; font-style: italic; }
+
+    /* RESULTS */
+    .results-grid { grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+    .result-card { text-align: center; }
+    .result-value { font-size: 2.2rem; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+    .result-label { font-size: .9rem; color: var(--text-sec); line-height: 1.4; }
+
+    /* ROLE & STACK */
+    .role-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    
+    /* FOOTER */
+    .site-footer { border-top: 1px solid var(--border); padding: 60px 0 30px; background: var(--bg); margin-top: 80px; }
+    .footer-brand { font-weight: 600; font-size: 1.1rem; margin-bottom: 12px; }
+    .footer-desc { font-size: .9rem; color: var(--text-sec); line-height: 1.5; max-width: 320px; }
+    .footer-title { font-size: .85rem; font-weight: 600; margin-bottom: 16px; text-transform: uppercase; letter-spacing: .05em; }
+    .footer-list { list-style: none; padding: 0; }
+    .footer-list li { margin-bottom: 10px; }
+    .footer-list a { color: var(--text-sec); text-decoration: none; font-size: .9rem; transition: color 0.2s; }
+    .footer-list a:hover { color: var(--accent); }
+    .footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: .8rem; color: var(--text-sec); }
+
+    /* BACK TO TOP */
+    #back-to-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 99; }
+    #back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    #back-to-top:hover { filter: brightness(1.1); transform: translateY(-3px); }
+
+    /* ========== RESPONSIVE ========== */
+    @media(max-width: 1024px){
+      .kpi-wrap { grid-column: 1 / -1 !important; margin-top: 24px; flex-direction: row; }
+    }
+    @media(max-width: 768px){
+      .container { padding: 0 16px; }
+      .section { padding: 60px 0 50px; }
+      .section h2 { font-size: 1.65rem; margin-bottom: 20px; }
+      .section h2::after { bottom: -8px; width: 40px; }
+      .case-hero h1 { font-size: 1.95rem; }
+      .case-hero .subtitle { font-size: 1rem; }
+      
+      [style*="grid-column: span"] { grid-column: 1 / -1 !important; }
+      .hero-text, .full-width, .kpi-wrap { grid-column: 1 / -1 !important; }
+      .kpi-wrap { flex-direction: column; }
+      
+      .versions-grid, .ba-grid, .role-grid { grid-template-columns: 1fr !important; }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .results-grid { grid-template-columns: 1fr; }
+      .hypothesis-flow { justify-content: center; }
+      .card { padding: 18px; }
+    }
+    @media(max-width: 640px){
+      .case-hero h1 { font-size: 1.75rem; }
+      .btn-lg { padding: 12px 20px; font-size: .95rem; }
+      .btn, .btn-outline { width: 100%; justify-content: center; }
+      .tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+      .tag { font-size: .65rem; padding: 3px 6px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .hypothesis-item { font-size: .8rem; padding: 6px 10px; }
+      #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="hdr">
+      <a href="index.html" class="logo">← На главную</a>
+      <button id="themeToggle" class="theme-btn" aria-label="Переключить тему">🌙</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 1. HERO -->
+    <section class="section case-hero">
+      <div class="grid">
+        <div class="hero-text" style="grid-column: span 8;">
+          <span class="mono">Кейс • A/B тест • Tilda • Аналитика</span>
+          <h1>A/B тест лендинга премиального travel-продукта</h1>
+          <p class="subtitle">+72% к конверсии после аудита, доработки страницы и повторного теста</p>
+          <div class="tags-wrap" style="display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 0;">
+            <span class="tag">A/B тест</span>
+            <span class="tag">Tilda</span>
+            <span class="tag">Яндекс Метрика</span>
+            <span class="tag">UX-аудит</span>
+            <span class="tag">Аналитика</span>
+          </div>
+        </div>
+        <div class="kpi-wrap" style="grid-column: span 4;">
+          <div class="kpi-card"><strong>+72%</strong><span>к конверсии после доработки</span></div>
+          <div class="kpi-card"><strong>2,7x</strong><span>выше по прямым заявкам</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. КРАТКО О ЗАДАЧЕ -->
+    <section class="section">
+      <div class="grid">
+        <div class="full-width" style="grid-column: 1 / -1;"><h2>Кратко о задаче</h2></div>
+        <div class="brief-grid" style="grid-column: 1 / -1; display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap);">
+          <div class="card"><span class="mono">Продукт</span><p>Премиальное авторское путешествие. Высокая стоимость, длинный цикл принятия решения, важность доверия к организаторам и маршруту.</p></div>
+          <div class="card"><span class="mono">Задача</span><p>Проверить корректность первого теста, оценить поведение пользователей, сформулировать гипотезы и подготовить повторный тест с чистой аналитикой.</p></div>
+          <div class="card"><span class="mono">Ограничения</span><p>Продукт не массовый. Решение формируется не через быстрый скролл, а через последовательное изучение ценности, условий и подтверждений доверия.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ДВЕ ВЕРСИИ ЛЕНДИНГА -->
+    <section class="section">
+      <div class="grid">
+        <div class="full-width" style="grid-column: 1 / -1;"><h2>Что было на входе</h2></div>
+        <div class="versions-grid" style="grid-column: 1 / -1; display:grid;">
+          <div class="card version-card version-a">
+            <span class="mono">Версия A</span>
+            <h3>Встроена в структуру сайта</h3>
+            <ul>
+              <li>Подробная, насыщенная структура</li>
+              <li>Больше информации о путешествии</li>
+              <li>Сильнее по содержанию и раскрытию продукта</li>
+              <li>Требует вдумчивого изучения</li>
+            </ul>
+          </div>
+          <div class="card version-card version-b">
+            <span class="mono">Версия B</span>
+            <h3>Классический продающий лендинг</h3>
+            <ul>
+              <li>Компактная структура, легче читается</li>
+              <li>Больше фокуса на последовательном ведении</li>
+              <li>Ближе к привычной маркетинговой логике</li>
+              <li>Быстрее проводит пользователя вниз по странице</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ГИПОТЕЗА -->
+    <section class="section">
+      <div class="grid">
+        <div class="full-width" style="grid-column: 1 / -1;"><h2>Гипотеза</h2></div>
+        <div style="grid-column: 1 / -1;">
+          <p style="color:var(--text-sec); margin-bottom:20px; max-width:800px;">Для премиального авторского путешествия решение формируется постепенно. Пользователь сначала считывает предложение, затем проверяет маршрут, условия, стоимость, уровень организации и подтверждения доверия, и только после этого переходит к заявке.</p>
+          <div class="hypothesis-flow">
+            <span class="hypothesis-item">Премиальный продукт</span>
+            <span class="hypothesis-arrow">→</span>
+            <span class="hypothesis-item">Доверие</span>
+            <span class="hypothesis-arrow">→</span>
+            <span class="hypothesis-item">Ценность маршрута</span>
+            <span class="hypothesis-arrow">→</span>
+            <span class="hypothesis-item">Условия</span>
+            <span class="hypothesis-arrow">→</span>
+            <span class="hypothesis-item">Подтверждения</span>
+            <span class="hypothesis-arrow">→</span>
+            <span class="hypothesis-item">Заявка</span>
+          </div>
+          <p style="margin-top:20px; max-width:800px;">Задача была не в том, чтобы просто сократить страницу или сделать её визуально легче. Важно было сохранить сильные стороны версии A, снизить перегрузку, усилить доверие и сделать путь к заявке более понятным.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ЧТО Я СДЕЛАЛА -->
+    <section class="section">
+      <div class="grid">
+        <div class="full-width" style="grid-column: 1 / -1;"><h2>Что я сделала</h2></div>
+        <div class="steps-grid" style="grid-column: 1 / -1; display:grid;">
+          <div class="card step-card"><span class="step-num">01</span><p>Аудит первого теста и аналитической настройки</p></div>
+          <div class="card step-card"><span class="step-num">02</span><p>Анализ поведения пользователей (Вебвизор, карты скролла и кликов)</p></div>
+          <div class="card step-card"><span class="step-num">03</span><p>Формулировка гипотез и маркетинговых рекомендаций</p></div>
+          <div class="card step-card"><span class="step-num">04</span><p>Доработка версии A на Tilda и настройка целей</p></div>
+          <div class="card step-card"><span class="step-num">05</span><p>Подготовка и анализ повторного A/B теста</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. ЧТО БЫЛО УЛУЧШЕНО (ТЕКСТОВЫЕ КАРТОЧКИ + ВИЗУАЛ) -->
+    <section class="section">
+      <div class="grid">
+        <div class="full-width" style="grid-column: 1 / -1;"><h2>Что было улучшено</h2></div>
+        
+        <!-- Текстовые карточки -->
+        <div class="ba-grid" style="grid-column: 1 / -1; display:grid;">
+          <div class="ba-card">
+            <div class="ba-title">Было</div>
+            <ul class="ba-list">
+              <li>Перегруженный первый экран</li>
+              <li>Часть ключевых аргументов слишком низко</li>
+              <li>Блоки доверия раскрыты слабо</li>
+              <li>Путь к заявке менее явный</li>
+            </ul>
+          </div>
+          <div class="ba-card">
+            <div class="ba-title">Стало</div>
+            <ul class="ba-list">
+              <li>Перераспределены ключевые блоки</li>
+              <li>Усилены элементы доверия и подтверждений</li>
+              <li>Улучшена навигация и структура страницы</li>
+              <li>Логика перехода к заявке стала яснее</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Визуал -->
+        <div class="visual-wrapper" style="grid-column: 1 / -1;">
+          <img src="assets/images/ab-test-structure.webp" alt="Схема улучшения лендинга: До и После" class="visual-img" loading="lazy" decoding="async">
+          <p class="visual-caption">Как перераспределение блоков, усиление доверия и чёткий путь к заявке повлияли на конверсию</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. РЕЗУЛЬТАТ -->
+    <section class="section">
+      <div class="grid">
+        <div class="full-width" style="grid-column: 1 / -1;"><h2>Результат</h2></div>
+        <div class="results-grid" style="grid-column: 1 / -1; display:grid;">
+          <div class="card result-card">
+            <div class="result-value">+72%</div>
+            <div class="result-label">рост конверсии обновленной версии относительно предыдущего теста</div>
+          </div>
+          <div class="card result-card">
+            <div class="result-value">2,7x</div>
+            <div class="result-label">превосходство по прямым заявкам над альтернативной версией</div>
+          </div>
+          <div class="card result-card">
+            <div class="result-value">Нюанс</div>
+            <div class="result-label">Альтернативная версия лучше вела вниз по странице, но не дала перевеса по заявкам. Глубина скролла ≠ конверсия.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. ГЛАВНЫЙ ВЫВОД -->
+    <section class="section">
+      <div class="grid">
+        <div style="grid-column: span 8;">
+          <h2>Главный вывод</h2>
+          <p style="margin-bottom:16px">Этот кейс показывает разницу между страницей, которая выглядит как хороший лендинг, и страницей, которая приводит к заявке. Версия B была ближе к классической логике продающего лендинга: она лучше проводила пользователя вниз по структуре и выглядела более компактной. Но для премиального travel-продукта этого оказалось недостаточно.</p>
+          <p>В продуктах с высокой стоимостью заявки решение формируется сложнее. Пользователю нужно быстро понять предложение, почувствовать надежность, увидеть ценность маршрута, получить достаточно подтверждений, снять сомнения по организации и понять, почему этому проекту можно доверять. Поэтому итоговое решение нельзя принимать только по глубине скролла, кликам или визуальной убедительности страницы. Важно смотреть на связку поведения, аналитики и фактических заявок.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. МОЯ РОЛЬ И СТЕК -->
+    <section class="section">
+      <div class="grid">
+        <div class="role-grid" style="grid-column: 1 / -1; display:grid;">
+          <div>
+            <h2>Моя роль в проекте</h2>
+            <ul style="margin-left:18px; color:var(--text-sec); line-height:1.8;">
+              <li>Аудит A/B теста и аналитики</li>
+              <li>UX и маркетинговый анализ лендинга</li>
+              <li>Подготовка гипотез и рекомендаций</li>
+              <li>Доработка версии A на Tilda</li>
+              <li>Настройка целей, форм и фиксации действий</li>
+              <li>Анализ результатов второго теста по Метрике, CRM Tilda, Вебвизору, картам скролла и кликов</li>
+            </ul>
+          </div>
+          <div>
+            <h2>Стек</h2>
+            <div class="tags-wrap" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+              <span class="tag">Tilda</span>
+              <span class="tag">Яндекс Метрика</span>
+              <span class="tag">Вебвизор</span>
+              <span class="tag">Карты скролла и кликов</span>
+              <span class="tag">CRM Tilda</span>
+              <span class="tag">Формы и цели</span>
+              <span class="tag">UTM-метки</span>
+              <span class="tag">A/B анализ</span>
+              <span class="tag">UX-аудит</span>
+              <span class="tag">Маркетинговая аналитика</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. CTA -->
+    <section class="section" style="border:none; padding-bottom:80px;">
+      <div class="grid">
+        <div style="grid-column: span 8;">
+          <h2>Если вам нужно не просто сравнить две страницы, а понять, что реально влияет на заявку, можно начать с аудита.</h2>
+          <p style="color:var(--text-sec); margin:16px 0 24px">Напишите мне в Telegram. Я разберу текущую структуру, проверю аналитику и покажу, где теряются пользователи и какие правки дадут наибольший рост конверсии.</p>
+          <a href="https://t.me/ArkhiMaria" class="btn btn-lg">Обсудить аудит в Telegram</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+        <div>
+          <div class="footer-brand">Мария Архипова</div>
+          <p class="footer-desc">Маркетолог-автоматизатор. Превращаю экспертные продукты в рабочие цифровые системы.</p>
+        </div>
+        <div>
+          <h4 class="footer-title">Навигация</h4>
+          <ul class="footer-list">
+            <li><a href="index.html#competencies">Что делаю</a></li>
+            <li><a href="index.html#cases">Кейсы</a></li>
+            <li><a href="index.html#reviews">Отзывы</a></li>
+            <li><a href="index.html#contact">Контакты</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Документы</h4>
+          <ul class="footer-list">
+            <li><a href="legal/privacy/">Конфиденциальность</a></li>
+            <li><a href="legal/offer/">Оферта</a></li>
+            <li><a href="legal/cookies/">Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="footerYear"></span> Мария Архипова. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-to-top" aria-label="Наверх">↑</button>
+
+  <script>
+    // Тема (☀️/🌙 на всех страницах, кроме 404)
+    const t=document.getElementById('themeToggle'),h=document.documentElement;
+    const s=localStorage.getItem('theme');
+    
+    // ЖЁСТКАЯ ТЁМНАЯ ТЕМА ПО УМОЛЧАНИЮ (не зависит от устройства)
+    function a(th){h.dataset.theme=th;t.textContent=th==='light'?'☀️':'🌙';localStorage.setItem('theme',th)}
+    a(s||'dark'); // Всегда тёмная, если пользователь не менял вручную
+    
+    t.addEventListener('click',()=>a(h.dataset.theme==='light'?'dark':'light'));
+
+    // Кнопка "Наверх"
+    const backToTop = document.getElementById('back-to-top');
+    if(backToTop) {
+      window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 400), { passive: true });
+      backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    // Год в футере
+    const yearEl=document.getElementById('footerYear');
+    if(yearEl) yearEl.textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

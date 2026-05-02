@@ -159,13 +159,31 @@
       .card { padding: 18px; }
     }
     @media(max-width: 640px){
-      .case-hero h1 { font-size: 1.75rem; }
-      .btn-lg { padding: 12px 20px; font-size: .95rem; }
-      .btn, .btn-outline { width: 100%; justify-content: center; }
-      .tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
-      .tag { font-size: .65rem; padding: 3px 6px; }
-      .steps-grid { grid-template-columns: 1fr; }
-      .hypothesis-item { font-size: .8rem; padding: 6px 10px; }
+  .case-hero h1 { font-size: 1.75rem; }
+  .btn-lg { padding: 12px 20px; font-size: .95rem; }
+  .btn, .btn-outline { width: 100%; justify-content: center; }
+  .tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: .65rem; padding: 3px 6px; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .hypothesis-item { font-size: .8rem; padding: 6px 10px; }
+  
+  /* Скрываем изображение на мобильных */
+  .visual-wrapper { display: none; }
+  
+  /* Карточки "Кратко о задаче" - друг под другом */
+  .brief-grid { grid-template-columns: 1fr !important; }
+  
+  /* Футер: правильный порядок блоков */
+  .site-footer .grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+  .site-footer .grid > div:nth-child(1) { order: 1; margin-bottom: 32px; }
+  .site-footer .grid > div:nth-child(2) { order: 2; margin-bottom: 32px; }
+  .site-footer .grid > div:nth-child(3) { order: 3; margin-bottom: 0; }
+  
+  #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; }
+}
       
       /* Скрываем изображение на мобильных */
       .visual-wrapper { display: none; }

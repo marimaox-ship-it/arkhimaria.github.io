@@ -166,6 +166,18 @@
       .tag { font-size: .65rem; padding: 3px 6px; }
       .steps-grid { grid-template-columns: 1fr; }
       .hypothesis-item { font-size: .8rem; padding: 6px 10px; }
+      
+      /* Скрываем изображение на мобильных */
+      .visual-wrapper { display: none; }
+      
+      /* Футер: перестраиваем колонки */
+      .site-footer .grid > div {
+        grid-template-columns: 1fr !important;
+      }
+      .site-footer .grid > div > div {
+        margin-bottom: 24px;
+      }
+      
       #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; }
     }
   </style>
@@ -186,7 +198,7 @@
         <div class="hero-text" style="grid-column: span 8;">
           <span class="mono">Кейс • A/B тест • Tilda • Аналитика</span>
           <h1>A/B тест лендинга премиального travel-продукта</h1>
-          <p class="subtitle">+72% к конверсии после аудита, доработки страницы и повторного теста</p>
+          <p class="subtitle">Клиент пришел после первого A/B теста двух версий лендинга: у команды были цифры, но не было уверенности, что по ним можно принимать решение. Я разобрала аналитику, поведение пользователей, доработала версию A и подготовила повторный тест с более корректной системой измерения.</p>
           <div class="tags-wrap" style="display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 0;">
             <span class="tag">A/B тест</span>
             <span class="tag">Tilda</span>
@@ -214,7 +226,17 @@
       </div>
     </section>
 
-    <!-- 3. ДВЕ ВЕРСИИ ЛЕНДИНГА -->
+    <!-- 3. ПОЧЕМУ ЭТО ВАЖНО -->
+    <section class="section">
+      <div class="grid">
+        <div style="grid-column: span 8;">
+          <h2>Почему это важно</h2>
+          <p>Для премиального продукта недостаточно выбрать страницу, которая выглядит более современной или лучше ведет пользователя вниз по экрану. Важно понять, какая версия действительно доводит до заявки: через доверие, раскрытие ценности, понятные условия и последовательный путь принятия решения.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ДВЕ ВЕРСИИ ЛЕНДИНГА -->
     <section class="section">
       <div class="grid">
         <div class="full-width" style="grid-column: 1 / -1;"><h2>Что было на входе</h2></div>
@@ -243,7 +265,17 @@
       </div>
     </section>
 
-    <!-- 4. ГИПОТЕЗА -->
+    <!-- 5. КОНФЛИКТ ГИПОТЕЗ -->
+    <section class="section">
+      <div class="grid">
+        <div style="grid-column: span 8;">
+          <h2>Конфликт гипотез</h2>
+          <p>Версия B выглядела более собранной с точки зрения классического лендинга. Но версия A глубже раскрывала продукт и могла лучше работать на доверие. Поэтому задача была не в том, чтобы выбрать "визуально более аккуратную" страницу, а в том, чтобы проверить, какая версия лучше приводит к прямой заявке.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. ГИПОТЕЗА -->
     <section class="section">
       <div class="grid">
         <div class="full-width" style="grid-column: 1 / -1;"><h2>Гипотеза</h2></div>
@@ -267,7 +299,7 @@
       </div>
     </section>
 
-    <!-- 5. ЧТО Я СДЕЛАЛА -->
+    <!-- 7. ЧТО Я СДЕЛАЛА -->
     <section class="section">
       <div class="grid">
         <div class="full-width" style="grid-column: 1 / -1;"><h2>Что я сделала</h2></div>
@@ -281,11 +313,16 @@
       </div>
     </section>
 
-    <!-- 6. ЧТО БЫЛО УЛУЧШЕНО (ТЕКСТОВЫЕ КАРТОЧКИ + ВИЗУАЛ) -->
+    <!-- 8. ЧТО БЫЛО УЛУЧШЕНО (ТЕКСТОВЫЕ КАРТОЧКИ + ВИЗУАЛ) -->
     <section class="section">
       <div class="grid">
-        <div class="full-width" style="grid-column: 1 / -1;"><h2>Что было улучшено</h2></div>
+        <div class="full-width" style="grid-column: 1 / -1;"><h2>Что изменилось в структуре страницы</h2></div>
         
+        <!-- Вводный текст -->
+        <div style="grid-column: 1 / -1; margin-bottom: 32px;">
+          <p style="color:var(--text-sec); max-width:800px;">После аудита я не стала просто "сокращать" страницу. Доработка была направлена на то, чтобы сохранить подробность версии A, но перераспределить ключевые аргументы, усилить доверие и сделать путь к заявке более понятным.</p>
+        </div>
+
         <!-- Текстовые карточки -->
         <div class="ba-grid" style="grid-column: 1 / -1; display:grid;">
           <div class="ba-card">
@@ -316,10 +353,16 @@
       </div>
     </section>
 
-    <!-- 7. РЕЗУЛЬТАТ -->
+    <!-- 9. РЕЗУЛЬТАТ -->
     <section class="section">
       <div class="grid">
         <div class="full-width" style="grid-column: 1 / -1;"><h2>Результат</h2></div>
+        
+        <!-- Вводный текст -->
+        <div style="grid-column: 1 / -1; margin-bottom: 32px;">
+          <p style="color:var(--text-sec); max-width:800px;">Повторный тест показал, что поведенческие метрики и бизнес-результат могут расходиться. Альтернативная версия лучше проводила пользователей вниз по странице, но обновленная версия A лучше конвертировала в прямую заявку.</p>
+        </div>
+
         <div class="results-grid" style="grid-column: 1 / -1; display:grid;">
           <div class="card result-card">
             <div class="result-value">+72%</div>
@@ -337,7 +380,7 @@
       </div>
     </section>
 
-    <!-- 8. ГЛАВНЫЙ ВЫВОД -->
+    <!-- 10. ГЛАВНЫЙ ВЫВОД -->
     <section class="section">
       <div class="grid">
         <div style="grid-column: span 8;">
@@ -348,7 +391,7 @@
       </div>
     </section>
 
-    <!-- 9. МОЯ РОЛЬ И СТЕК -->
+    <!-- 11. МОЯ РОЛЬ И СТЕК -->
     <section class="section">
       <div class="grid">
         <div class="role-grid" style="grid-column: 1 / -1; display:grid;">
@@ -382,12 +425,12 @@
       </div>
     </section>
 
-    <!-- 10. CTA -->
+    <!-- 12. CTA -->
     <section class="section" style="border:none; padding-bottom:80px;">
       <div class="grid">
         <div style="grid-column: span 8;">
-          <h2>Если вам нужно не просто сравнить две страницы, а понять, что реально влияет на заявку, можно начать с аудита.</h2>
-          <p style="color:var(--text-sec); margin:16px 0 24px">Напишите мне в Telegram. Я разберу текущую структуру, проверю аналитику и покажу, где теряются пользователи и какие правки дадут наибольший рост конверсии.</p>
+          <h2>Нужно понять, что реально влияет на заявки?</h2>
+          <p style="color:var(--text-sec); margin:16px 0 24px">Начать можно с аудита лендинга и аналитики. Я проверю структуру страницы, цели, формы, поведение пользователей и покажу, где теряются заявки и какие правки могут дать рост конверсии.</p>
           <a href="https://t.me/ArkhiMaria" class="btn btn-lg">Обсудить аудит в Telegram</a>
         </div>
       </div>
@@ -397,11 +440,13 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+      <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        <!-- Колонка 1: Мария Архипова -->
         <div>
           <div class="footer-brand">Мария Архипова</div>
           <p class="footer-desc">Маркетолог-автоматизатор. Превращаю экспертные продукты в рабочие цифровые системы.</p>
         </div>
+        <!-- Колонка 2: Навигация -->
         <div>
           <h4 class="footer-title">Навигация</h4>
           <ul class="footer-list">
@@ -411,6 +456,7 @@
             <li><a href="index.html#contact">Контакты</a></li>
           </ul>
         </div>
+        <!-- Колонка 3: Документы -->
         <div>
           <h4 class="footer-title">Документы</h4>
           <ul class="footer-list">
@@ -434,7 +480,7 @@
     const s=localStorage.getItem('theme');
     
     // ЖЁСТКАЯ ТЁМНАЯ ТЕМА ПО УМОЛЧАНИЮ (не зависит от устройства)
-    function a(th){h.dataset.theme=th;t.textContent=th==='light'?'☀️':'🌙';localStorage.setItem('theme',th)}
+    function a(th){h.dataset.theme=th;t.textContent=th==='light'?'☀️':'';localStorage.setItem('theme',th)}
     a(s||'dark'); // Всегда тёмная, если пользователь не менял вручную
     
     t.addEventListener('click',()=>a(h.dataset.theme==='light'?'dark':'light'));

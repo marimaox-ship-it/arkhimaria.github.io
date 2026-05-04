@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мария Архипова | Маркетолог-автоматизатор</title>
+  <meta name="description" content="Маркетолог-автоматизатор: собираю из методик работающие цифровые продукты, сайты на Tilda, боты, рассылки, воронки и системы вокруг продукта. От заявки до повторной продажи.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ========== ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ ========== */
+    :root {
+      --bg: #0B0C10;
+      --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08);
+      --text: #E5E7EB;
+      --text-sec: #9CA3AF;
+      --accent: #14b8a6;
+      --accent-gradient: linear-gradient(90deg, #14b8a6, #f472b6, #f97316);
+      --card-hover-shadow: rgba(20,184,166,0.15);
+      --font: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --gap: 24px;
+      --max: 1280px;
+      --header-h: 64px;
+      --footer-bg: #05060a;
+    }
+
+    [data-theme="light"] {
+      --bg: #F8F9FA;
+      --surface: rgba(0,0,0,0.04);
+      --border: rgba(0,0,0,0.08);
+      --text: #1F2937;
+      --text-sec: #6B7280;
+      --accent: #0f766e;
+      --accent-gradient: linear-gradient(90deg, #0f766e, #f472b6, #f97316);
+      --card-hover-shadow: rgba(13,148,136,0.12);
+      --footer-bg: #f1f5f9;
+    }
+
+    /* ========== БАЗОВЫЕ СТИЛИ ========== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      padding-top: var(--header-h);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
+    .mono { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.05em; color: var(--text-sec); text-transform: uppercase; }
+    .tag { display: inline-block; background: var(--surface); border: 1px solid var(--border); padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; margin: 4px 4px 0 0; }
+    
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 500; transition: 0.2s; border: none; cursor: pointer; font-size: 0.95rem; overflow-wrap: break-word; }
+    .btn:hover { background: var(--accent); filter: brightness(1.1); transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--accent); }
+    .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+    
+    .section { padding: 90px 0 80px; border-bottom: 1px solid var(--border); transition: border-color 0.3s ease; }
+    .section:last-child { border: none; padding-bottom: 40px; }
+    
+    .section h2 {
+      font-size: 2.1rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 28px;
+      position: relative;
+      display: inline-block;
+      line-height: 1.25;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px; left: 0;
+      width: 56px; height: 2px;
+      background: var(--accent-gradient);
+      border-radius: 2px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      overflow-wrap: anywhere;
+      min-width: 0;
+    }
+    .card h3 { font-size: 1.2rem; margin: 0 0 12px; font-weight: 600; }
+    .card p { font-size: 0.9rem; color: var(--text-sec); line-height: 1.5; }
+    .card .price { display: block; font-weight: 600; color: var(--text); margin: 8px 0 12px; }
+
+    /* HEADER */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+      background: var(--bg); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border); z-index: 100;
+      display: flex; align-items: center;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; max-width: var(--max); margin: 0 auto; padding: 0 20px; width: 100%; }
+    .logo { font-weight: 600; font-size: 1rem; color: var(--text); text-decoration: none; }
+    .nav { display: flex; gap: 18px; align-items: center; }
+    .nav a { color: var(--text-sec); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav a:hover { color: var(--text); }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .theme-toggle { padding: 6px 10px; font-size: 1.1rem; line-height: 1; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border); color: var(--text); cursor: pointer; }
+    .menu-toggle { display: none; background: transparent; border: 1px solid var(--border); color: var(--text); font-size: 1.3rem; cursor: pointer; padding: 6px 10px; border-radius: 6px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      position: fixed; top: var(--header-h); left: 0; right: 0; bottom: 0;
+      background: var(--bg); padding: 24px 20px; z-index: 99;
+      transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex; flex-direction: column; gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      font-size: 1.15rem; color: var(--text); text-decoration: none; padding: 16px 0;
+      border-bottom: 1px solid var(--border); display: block; transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero { min-height: calc(100vh - var(--header-h)); display: flex; align-items: center; }
+    .hero h1 { font-size: 2.8rem; line-height: 1.25; margin: 12px 0 20px; max-width: 850px; overflow-wrap: anywhere; }
+    .hero p { font-size: 1.1rem; color: var(--text-sec); max-width: 720px; margin-bottom: 28px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* DIRECTIONS */
+    .directions-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); margin-top: 20px; }
+
+    /* FOR WHOM */
+    .for-list { display: flex; flex-direction: column; gap: 12px; margin: 20px 0 24px; }
+    .for-item { background: var(--surface); padding: 16px 20px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.95rem; overflow-wrap: anywhere; }
+    .for-item strong { color: var(--accent); display: block; margin-bottom: 6px; font-size: 1rem; }
+    .for-final { color: var(--accent); font-style: normal; font-weight: 500; margin-top: 16px; }
+
+    /* FORMATS */
+    .formats-intro { color: var(--text-sec); margin-bottom: 32px; max-width: 760px; }
+    .formats-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+    .formats-card { border-left: 3px solid var(--accent); transition: 0.3s; }
+    .formats-card:hover { border-color: var(--accent); box-shadow: 0 4px 24px var(--card-hover-shadow); transform: translateY(-3px); }
+
+    /* COMPETENCIES */
+    .comp-intro { color: var(--text-sec); margin-bottom: 32px; max-width: 760px; }
+    .comp-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+    .comp-card { background: transparent; transition: 0.2s; }
+    .comp-card:hover { border-color: var(--accent); }
+
+    /* CASES */
+    .cases-intro { color: var(--text-sec); margin-bottom: 32px; max-width: 760px; }
+    .cases-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+    .case-card { display: flex; flex-direction: column; }
+    .case-img {
+      width: 100%; height: 140px; object-fit: cover;
+      background: linear-gradient(135deg, #1a1b23, #252830);
+      border-radius: 8px; margin-bottom: 14px; display: block;
+    }
+    [data-theme="light"] .case-img { background: linear-gradient(135deg, #e5e7eb, #d1d5db); }
+    .case-card h3 { margin-bottom: 4px; font-size: 1.2rem; }
+    .case-card .mono { margin-bottom: 10px; display: block; }
+    .case-tags { margin: 12px 0; }
+    .case-btn { margin-top: auto; }
+
+    /* TOOLS GRID */
+    .tools-grid { grid-column: span 12; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .tools-grid .tag { font-size: 0.8rem; padding: 6px 14px; }
+
+    /* ABOUT */
+    .about-grid { grid-column: span 12; display: grid; grid-template-columns: 4fr 8fr; gap: 40px; align-items: start; }
+    .about-photo {
+      width: 100%; max-width: 280px; aspect-ratio: 1;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-header h2 { margin-bottom: 8px; margin-top: 0; }
+    .about-text p { margin-bottom: 16px; color: var(--text-sec); overflow-wrap: anywhere; }
+    .about-text p:last-child { margin-bottom: 24px; }
+
+    /* REVIEWS */
+    .reviews-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); margin-top: 8px; }
+    .review-card { display: flex; flex-direction: column; gap: 16px; }
+    .review-text { color: var(--text); font-size: 0.95rem; line-height: 1.7; overflow-wrap: anywhere; }
+    .review-author { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+    .review-author span { color: var(--text-sec); font-size: 0.9rem; }
+    .review-tags { margin-top: 4px; }
+
+    /* PROCESS */
+    .process-list { counter-reset: step; list-style: none; }
+    .process-list li { counter-increment: step; padding: 20px 0 20px 44px; position: relative; border-left: 1px solid var(--border); }
+    .process-list li::before { content: counter(step); position: absolute; left: -13px; top: 20px; width: 26px; height: 26px; background: var(--bg); border: 1px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.7rem; color: var(--accent); transition: background 0.3s, border-color 0.3s; }
+    .process-list strong { display: block; margin-bottom: 6px; color: var(--text); font-size: 1rem; }
+
+    /* CONTACT */
+    .contact-grid { grid-column: span 12; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .contact-text p { color: var(--text-sec); margin-bottom: 20px; overflow-wrap: anywhere; }
+    .contact-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    .contact-note { font-size: 0.85rem; color: var(--text-sec); font-style: italic; }
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--footer-bg);
+      padding: 48px 0 24px;
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner { display: grid; gap: 28px; }
+    .footer-brand strong { font-size: 1.2rem; display: block; margin-bottom: 6px; }
+    .footer-brand span { display: block; color: var(--text-sec); }
+    .footer-nav, .footer-docs { display: flex; flex-wrap: wrap; gap: 20px; font-size: 0.9rem; }
+    .footer-nav a, .footer-docs a { color: var(--accent); text-decoration: none; transition: color 0.2s, opacity 0.2s; }
+    .footer-nav a:hover, .footer-docs a:hover { color: var(--accent); text-decoration: underline; opacity: 0.85; }
+    .footer-copy { text-align: center; font-size: 0.8rem; opacity: 0.6; margin-top: 16px; }
+
+    /* BACK TO TOP */
+    #back-to-top {
+      position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: #fff; border: none; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0; pointer-events: none;
+      transform: translateY(10px); transition: all 0.3s ease; z-index: 90; font-size: 1.2rem;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #back-to-top:hover { filter: brightness(1.1); transform: translateY(-3px); }
+
+    /* COOKIE BANNER */
+    .cookie-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 12px; z-index: 998; transform: translateY(100%); transition: transform 0.3s ease;
+    }
+    .cookie-banner.show { transform: translateY(0); }
+    .cookie-banner p { font-size: 0.85rem; color: var(--text-sec); margin: 0; flex: 1 1 300px; line-height: 1.4; }
+    .cookie-banner .btn { padding: 8px 16px; font-size: 0.85rem; white-space: nowrap; }
+
+    /* ========== АДАПТИВНЫЕ СТИЛИ ========== */
+    @media (max-width: 1024px) {
+      .formats-grid, .comp-grid, .directions-grid { grid-template-columns: repeat(2, 1fr); }
+      .formats-grid > *:nth-child(3), .comp-grid > *:nth-child(3) { grid-column: span 2; }
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.25rem; }
+      .cases-grid, .reviews-grid, .contact-grid, .about-grid, .directions-grid { grid-template-columns: 1fr; }
+      .formats-grid, .comp-grid { grid-template-columns: 1fr; }
+      .formats-grid > *, .comp-grid > * { grid-column: span 1 !important; }
+      .about-photo { max-width: 220px; margin: 0 auto 24px; }
+      .about-grid { text-align: center; }
+      #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn { width: 100%; justify-content: center; }
+    }
+    @media (hover: none) {
+      .card:hover, .btn:hover { transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    /* ========== ИСПРАВЛЕННАЯ АДАПТАЦИЯ 640px ========== */
+    @media (max-width: 640px) {
+      .hero { min-height: auto; padding: 60px 0 40px; }
+      .hero h1 { font-size: 1.85rem; line-height: 1.3; }
+      .hero p { font-size: 1rem; }
+      .section { padding: 60px 0 40px; }
+      .section h2 { font-size: 1.75rem; margin-bottom: 20px; }
+      .section h2::after { bottom: -8px; width: 48px; }
+      .menu-toggle { display: flex; }
+      .nav { display: none; }
+      .container { padding: 0 16px; }
+      .about-text { text-align: left; }
+
+      /* Сбрасываем все сетки в 1 колонку и убираем фиксированные span */
+      .directions-grid, .formats-grid, .comp-grid, .cases-grid, .reviews-grid, .contact-grid, .about-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .directions-grid > *, .formats-grid > *, .comp-grid > *, .cases-grid > *, .reviews-grid > *, .contact-grid > *, .about-grid > *,
+      .container.grid > [style*="grid-column"] {
+        grid-column: 1 / -1 !important;
+        min-width: 0;
+      }
+
+      /* Компактный блок инструментов на мобильных */
+      .tools-grid {
+        gap: 6px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 8px 0;
+      }
+      .tools-grid .tag {
+        width: auto;
+        padding: 5px 10px;
+        font-size: 0.7rem;
+        margin: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .section:has(.tools-grid) { padding: 40px 0 30px; }
+
+      /* Кнопки */
+      .hero-actions, .contact-btns { flex-direction: column; width: 100%; }
+      .hero-actions .btn, .contact-btns .btn { width: 100%; justify-content: center; }
+
+      /* Список процессов: убираем вылет псевдоэлементов за край */
+      .process-list li { padding-left: 36px; border-left: none; }
+      .process-list li::before { left: 0; top: 20px; }
+
+      /* Cookie banner подстраивается под мобильный */
+      .cookie-banner { padding: 10px 16px; }
+      .cookie-banner p { flex: 1 1 100%; margin-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">Мария Архипова</div>
+      <nav class="nav">
+        <a href="#competencies">Что делаю</a>
+        <a href="#cases">Кейсы</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#about">Обо мне</a>
+        <a href="#formats">Форматы работы</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">🌙</button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Открыть меню">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="#competencies">Что делаю</a>
+    <a href="#cases">Кейсы</a>
+    <a href="#reviews">Отзывы</a>
+    <a href="#about">Обо мне</a>
+    <a href="#formats">Форматы работы</a>
+    <a href="#contact">Контакты</a>
+    <a href="#contact" style="color: var(--accent); font-weight: 500; border: none; margin-top: 10px;">Обсудить задачу</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero section">
+    <div class="container grid">
+      <div style="grid-column: span 9;">
+        <span class="mono">Маркетолог-автоматизатор для экспертных, сервисных и онлайн-проектов</span>
+        <h1>Собираю из методик и программ работающие цифровые продукты. А сайты, ботов и воронки довожу до заявок, оплат и повторных продаж</h1>
+        <p>Собираю разрозненные идеи, страницы и инструменты в систему, где пользователь понимает следующий шаг, а проект получает заявки, оплаты и повторные касания</p>
+        <div class="hero-actions">
+          <a href="#cases" class="btn">Посмотреть кейсы</a>
+          <a href="#contact" class="btn btn-outline">Обсудить задачу</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДВА ОСНОВНЫХ НАПРАВЛЕНИЯ -->
+  <section class="section">
+    <div class="container grid">
+      <div style="grid-column: span 12;"><h2>Два основных направления, в которых я работаю</h2></div>
+      <div class="directions-grid">
+        <div class="card"><h3>Собрать методику в цифровой продукт</h3><p>Упаковываю методики, клубы и экспертные материалы в цифровые продукты: ботов, закрытые программы и системы с доступами, оплатами, напоминаниями и переходами между продуктами. От идеи до готового к запуску продукта</p></div>
+        <div class="card"><h3>Найти, где проект теряет заявки и оплаты, и исправить</h3><p>Провожу аудит сайтов, ботов, воронок и аналитики. Показываю, в какой точке пользователи уходят, а проект недополучает заявки и оплаты. И что именно менять, чтобы это исправить</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- КО МНЕ ПРИХОДЯТ, КОГДА -->
+  <section class="section">
+    <div class="container grid">
+      <div style="grid-column: span 8;"><h2>Ко мне приходят, когда</h2>
+        <div class="for-list">
+          <div class="for-item"><strong>Методика или программа уже есть, но её нужно превратить в цифровой продукт</strong>Материалы лежат в документах, а не работают как система с доступами, этапами и автосценариями</div>
+          <div class="for-item"><strong>Сайт, бот или воронка уже работают, но заявок и оплат меньше, чем могло бы быть</strong>Трафик есть, продукт востребован, но цифры не сходятся с ожиданиями. Значит, что-то сломано на пути к заявке</div>
+          <div class="for-item"><strong>Аналитика подключена, но по ней нельзя понять, что именно менять</strong>Цифры есть, а решения всё равно принимаются наугад</div>
+          <div class="for-item"><strong>Продукты, сайты, формы и рассылки существуют отдельно и не работают как система</strong>Клиент проходит один шаг и теряется на следующем</div>
+          <div class="for-item"><strong>Пользователи доходят до сайта или бота, но теряются по пути к заявке, оплате или следующему продукту</strong>Человек уже заинтересовался, но что-то пошло не так</div>
+        </div>
+        <p class="for-final">Я помогаю выстроить логику, в которой пользователь понимает следующий шаг, а проект получает не разрозненные инструменты, а рабочую систему</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- КАК МОЖЕМ РАБОТАТЬ -->
+  <section class="section" id="formats">
+    <div class="container grid">
+      <div style="grid-column: span 12;"><h2>Как можем работать</h2>
+        <p class="formats-intro">Можно прийти с одной задачей, а можно собрать более целостную систему вокруг продукта. Формат зависит от того, на каком этапе вы сейчас находитесь и где проект теряет результат</p>
+      </div>
+      <div class="formats-grid">
+        <div class="card formats-card"><span class="mono">АУДИТ И РАЗБОР</span><p>Подходит, если уже есть сайт, бот, форма, программа или воронка, но непонятно, где теряются пользователи и что править первым. Я нахожу проблемные точки и даю план действий</p></div>
+        <div class="card formats-card"><span class="mono">ДОРАБОТКА КЛЮЧЕВОГО УЧАСТКА</span><p>Подходит, если нужно усилить конкретный элемент: лендинг на Tilda, бот, форму, аналитику, сценарий, цепочку писем или путь к заявке. На выходе — готовый работающий участок</p></div>
+        <div class="card formats-card"><span class="mono">СИСТЕМА ВОКРУГ ПРОДУКТА</span><p>Подходит, если нужно связать в одну логику цифровой продукт, сайт, формы, доступы, рассылки, аналитику и повторные касания. На выходе — готовая к запуску инфраструктура</p></div>
+      </div>
+      <div style="grid-column: span 12; margin-top: 24px;">
+        <p style="color: var(--text-sec); font-size: 0.95rem;">Не уверены, моя ли это задача? Напишите: что уже есть и какой результат нужен. Я скажу, могу ли помочь и какой формат подойдёт</p>
+        <a href="https://t.me/ArkhiMaria" class="btn" style="margin-top: 16px;">Написать</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ИЗБРАННЫЕ КЕЙСЫ -->
+  <section class="section" id="cases">
+    <div class="container grid">
+      <div style="grid-column: span 12;"><h2>Избранные кейсы</h2><p class="cases-intro">Здесь задачи, которые мне интересно решать: от упаковки методики до точечной работы с конверсией и аналитикой</p></div>
+      <div class="cases-grid">
+        <div class="card case-card"><div class="case-img" style="background: linear-gradient(135deg, #1a1b23, #252830); display: flex; align-items: center; justify-content: center; color: var(--text-sec);">📱 Клуб + боты</div><h3>Инфраструктура эксперта в нише здоровья</h3><span class="mono">Клуб + боты + повторные продажи</span><p>Автоматизированные программы, оплаты, доступы, рассылки, напоминания, метрики и возвратные касания. Разрозненные продукты собраны в единую экосистему</p><div class="case-tags"><span class="tag">Telegram</span><span class="tag">VK</span><span class="tag">Клиентский путь</span><span class="tag">LTV</span><span class="tag">Рассылки</span></div><a href="cases/health-product-infrastructure/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a></div>
+        <div class="card case-card"><div class="case-img" style="background: linear-gradient(135deg, #1a1b23, #252830); display: flex; align-items: center; justify-content: center; color: var(--text-sec);">🤖 Telegram-бот</div><h3>Telegram-бот как цифровой продукт</h3><span class="mono">28-дневная программа • подписки • сохранение прогресса</span><p>Бот с платными доступами, сценарием прохождения, напоминаниями, баллами и сохранением состояния пользователя. Собран, протестирован, передан автору</p><div class="case-tags"><span class="tag">Telegram</span><span class="tag">Сценарии</span><span class="tag">Цифровой продукт</span><span class="tag">BotHunter</span><span class="tag">Запуск</span></div><a href="cases/opora-telegram-bot/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a></div>
+        <div class="card case-card"><div class="case-img" style="background: linear-gradient(135deg, #1a1b23, #252830); display: flex; align-items: center; justify-content: center; color: var(--text-sec);">📈 +72%</div><h3>Доработка лендинга на Tilda: +72% к конверсии</h3><span class="mono">Tilda • структура • рост конверсии</span><p>Переработала страницу для сложного продукта с длинным циклом сделки. Глубокая структура осталась, путь к заявке стал короче, конверсия пошла вверх</p><div class="case-tags"><span class="tag">Tilda</span><span class="tag">Структура страницы</span><span class="tag">Конверсия</span><span class="tag">UX</span></div><a href="cases/ab-test-landing/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a></div>
+        <div class="card case-card"><div class="case-img" style="background: linear-gradient(135deg, #1a1b23, #252830); display: flex; align-items: center; justify-content: center; color: var(--text-sec);">📊 A/B тест</div><h3>A/B тест лендинга: поведение пользователей и заявки</h3><span class="mono">Аналитика • Вебвизор • CRM • заявки</span><p>Повторный тест показал: страница, которая выглядит сильнее, не всегда выигрывает по заявкам. Победила та, что давала больше аргументов и глубины</p><div class="case-tags"><span class="tag">A/B тест</span><span class="tag">Яндекс Метрика</span><span class="tag">CRM</span><span class="tag">Вебвизор</span></div><a href="cases/ab-test-landing/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЧТО ИМЕННО Я МОГУ ВЗЯТЬ В РАБОТУ -->
+  <section class="section" id="competencies">
+    <div class="container grid">
+      <div style="grid-column: span 12;"><h2>Что именно я могу взять в работу</h2><p class="comp-intro">Подключаюсь и к отдельной задаче, и к более широкой системе вокруг продукта. Ниже — основные зоны, с которыми работаю чаще всего</p></div>
+      <div class="comp-grid">
+        <div class="card comp-card"><span class="mono">01</span><h3>Цифровой продукт</h3><p>Бот, закрытая программа, клуб, сценарии, доступы, оплаты, напоминания, переходы между продуктами</p></div>
+        <div class="card comp-card"><span class="mono">02</span><h3>Сайты и путь к заявке</h3><p>Лендинги и сайты на Tilda, структура, формы, кнопки, сценарий перехода к заявке, усиление слабых мест страницы</p></div>
+        <div class="card comp-card"><span class="mono">03</span><h3>Аналитика и проверка гипотез</h3><p>Метрика, формы, CRM, Вебвизор, карты кликов и скролла, A/B тесты и выводы, на которые можно опираться в решениях</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ИНСТРУМЕНТЫ И ЗАДАЧИ -->
+  <section class="section">
+    <div class="container grid">
+      <div style="grid-column: span 12;"><h2>Инструменты и задачи, с которыми тоже работаю</h2><p class="comp-intro" style="margin-bottom: 16px;">Это не отдельные направления позиционирования, а инструменты и задачи, которые могут входить в проект в зависимости от вашей системы и этапа работы</p></div>
+      <div class="tools-grid">
+        <span class="tag">Tilda</span><span class="tag">Zero Block</span><span class="tag">Telegram-боты</span><span class="tag">VK-боты</span><span class="tag">MAX</span><span class="tag">BotHunter</span><span class="tag">Leadteh</span><span class="tag">BotHelp</span><span class="tag">SaleBot</span><span class="tag">Яндекс Метрика</span><span class="tag">Вебвизор</span><span class="tag">Карты скролла и кликов</span><span class="tag">CRM Tilda</span><span class="tag">Формы и цели</span><span class="tag">UTM-метки</span><span class="tag">UniSender</span><span class="tag">Email-рассылки</span><span class="tag">Google Workspace</span><span class="tag">DNS</span><span class="tag">SSL</span><span class="tag">A/B анализ</span><span class="tag">UX-аудит</span><span class="tag">Клиентский путь</span><span class="tag">Повторные продажи</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ОТЗЫВЫ -->
+  <section class="section" id="reviews">
+    <div class="container grid">
+      <div style="grid-column: span 12;"><h2>Что говорят клиенты</h2></div>
+      <div class="reviews-grid">
+        <div class="card review-card"><p class="review-text">«Фактически Мария с нуля создала инфраструктуру моих продуктов. Причём не только технически. На данный момент у меня работает постоянный клуб на основе чат-бота, созданного Марией»</p><div class="review-author"><strong>Елена Д.</strong><span>Эксперт в нише здоровья и телесных практик</span></div><div class="review-tags"><span class="tag">Инфраструктура продуктов</span><span class="tag">Боты</span><span class="tag">Рассылки</span></div></div>
+        <div class="card review-card"><p class="review-text">«Мария с самого начала была максимально вовлечена в процесс: уточняла задачу, предлагала свои идеи и решения. Бот работает стабильно, аккуратно реализован функционал, учтены все детали»</p><div class="review-author"><strong>Татьяна В.</strong><span>Автор и основатель Telegram-бота «ОПОРА»</span></div><div class="review-tags"><span class="tag">Telegram-бот</span><span class="tag">Сценарии</span><span class="tag">Запуск</span></div></div>
+        <div class="card review-card"><p class="review-text">«Мария отличный исполнитель! Быстро вникает в задачу, предлагает решения, всё выполняет в срок и находит проблемные точки, которые мы пропустили»</p><div class="review-author"><strong>Ксения К.</strong><span>Операционный менеджер проекта на Tilda</span></div><div class="review-tags"><span class="tag">Tilda</span><span class="tag">Поддержка сайта</span><span class="tag">Проблемные точки</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ОБО МНЕ -->
+  <section class="section" id="about">
+    <div class="container grid">
+      <div class="about-grid"><div><div class="about-photo"><img src="assets/iam.webp" alt="Мария Архипова"></div><div class="about-header"><h2>Обо мне</h2></div></div><div class="about-text"><p>Меня зовут Мария Архипова. Я маркетолог-автоматизатор: помогаю превращать идеи, курсы, клубы и программы в рабочие цифровые продукты: ботов, страницы, рассылки, воронки и системы вокруг продукта.</p><p>Моя сильная зона — клиентский путь. В проектах я смотрю, где пользователь не понимает следующий шаг, бросает прохождение, не доходит до оплаты, теряется между продуктами или сталкивается с лишней сложностью, которую можно заранее продумать и автоматизировать.</p><p>Более 7 лет работаю в маркетинге, а опыт в проектном менеджменте превышает 10 лет.</p><p>Во время магистерского исследования по социальной рекламе я много работала с темой восприятия сообщений. Один из значимых ответов участников хорошо сформулировал проблему, которую потом часто замечала в маркетинге: человек не чувствует, что сообщение обращено к нему.</p><p>Поэтому в проектах важно не только выбрать инструмент, но и понять восприятие пользователя: что он понимает, где теряется и почему, какой следующий шаг готов совершить.</p><a href="#contact" class="btn">Обсудить задачу</a></div></div>
+    </div>
+  </section>
+
+  <!-- КАК Я РАБОТАЮ -->
+  <section class="section" id="process">
+    <div class="container grid">
+      <div style="grid-column: span 12;"><h2>Как я работаю</h2></div>
+      <div style="grid-column: span 8;"><ul class="process-list"><li><strong>Разбираю задачу и текущую систему</strong>Смотрю, что уже есть: продукт, сайт, бот, рассылки, формы, аналитика, точки входа и проблемные места</li><li><strong>Определяю формат работы</strong>Иногда достаточно одной правки или аудита. Иногда нужен отдельный проект: бот, лендинг, A/B тест, рассылка или система вокруг продукта</li><li><strong>Продумываю путь пользователя</strong>Фиксирую, как человек приходит, что видит, где оставляет заявку или оплачивает, как получает доступ, где возвращается и какой следующий шаг ему нужен. Смотрю не только на прямолинейный путь, но и на развилки: что если человек не готов покупать сейчас, куда он попадёт и как мы его вернём</li><li><strong>Делаю реализацию</strong>Собираю страницы, ботов, формы, сценарии, аналитику, рассылки, доступы и другие рабочие элементы системы</li><li><strong>Проверяю и передаю в работу</strong>Проверяю сценарии, заявки, формы, кнопки, адаптив, аналитику и базовую логику работы. Если нужно, предлагаю следующую итерацию</li></ul></div>
+    </div>
+  </section>
+
+  <!-- ФИНАЛЬНЫЙ CTA -->
+  <section class="section" id="contact">
+    <div class="container grid">
+      <div class="contact-grid"><div class="contact-text"><h2>Если вам нужно упаковать методику в цифровой продукт или усилить путь к заявке через сайт, аналитику и структуру, начнём с разбора задачи</h2><p>Посмотрю, что у вас уже есть: продукт, бот, сайт, форма, воронка или аналитика. Помогу понять, где проект теряет людей, что мешает заявке и какой формат работы даст самый сильный результат</p><div class="contact-btns"><a href="https://t.me/ArkhiMaria" class="btn">Написать в Telegram</a><a href="https://max.ru/u/f9LHodD0cOIbyM5I6qkOD8eoebfJF6sCIjzU195WIeKnfzPxCQheEeAbpR4" class="btn btn-outline">Написать в MAX</a><a href="mailto:marimaox@gmail.com" class="btn btn-outline">Написать на email</a></div><p class="contact-note">В первом сообщении можно коротко написать: что уже есть, какая задача, сроки и удобный способ связи</p></div></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner"><div class="footer-brand"><strong>Мария Архипова</strong><span>Маркетолог-автоматизатор</span><span>Превращаю экспертные продукты в рабочие цифровые системы</span></div><div class="footer-nav"><a href="#competencies">Что делаю</a><a href="#cases">Кейсы</a><a href="#reviews">Отзывы</a><a href="#contact">Контакты</a></div><div class="footer-docs"><!--<a href="/legal/privacy/">Конфиденциальность</a><a href="/legal/offer/">Оферта</a><a href="/legal/cookies/">Cookies</a>--></div><div class="footer-copy">© <span id="year"></span> Мария Архипова. Все права защищены</div></div>
+  </footer>
+
+  <button id="back-to-top" aria-label="Наверх">↑</button>
+
+  <!-- COOKIE BANNER
+  <div id="cookie-banner" class="cookie-banner">
+    <p>Мы используем cookies для корректной работы сайта. Продолжая пользоваться сайтом, вы соглашаетесь с этим.</p>
+    <button id="cookie-accept" class="btn btn-sm">Принять</button>
+  </div>
+  -->
+
+  <script>
+    // Тема
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    function applyTheme(theme) { html.setAttribute('data-theme', theme); toggle.textContent = theme === 'light' ? '☀️' : '🌙'; localStorage.setItem('theme', theme); }
+    applyTheme(saved || system);
+    toggle.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
+
+    // Меню
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    menuToggle.addEventListener('click', () => { const isOpen = mobileMenu.classList.toggle('open'); menuToggle.textContent = isOpen ? '✕' : '☰'; document.body.style.overflow = isOpen ? 'hidden' : ''; });
+    mobileLinks.forEach(link => { link.addEventListener('click', () => { mobileMenu.classList.remove('open'); menuToggle.textContent = '☰'; document.body.style.overflow = ''; }); });
+
+    // Наверх
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => { backToTop.classList.toggle('visible', window.scrollY > 400); });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Год
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Cookies — отключено до подключения аналитики
+    /*
+    const cookieBanner = document.getElementById('cookie-banner');
+    const cookieBtn = document.getElementById('cookie-accept');
+    if (!localStorage.getItem('cookie-accepted')) {
+      cookieBanner.classList.add('show');
+    }
+    cookieBtn.addEventListener('click', () => {
+      localStorage.setItem('cookie-accepted', 'true');
+      cookieBanner.classList.remove('show');
+    });
+    */
+  </script>
+</body>
+</html>

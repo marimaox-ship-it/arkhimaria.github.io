@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кейс: как доработка лендинга A на Tilda повысила конверсию на 72% | Мария Архипова</title>
     <meta name="description" content="Доработка страницы для travel-бизнеса: как переработка структуры, усиление доверия и работа с аналитикой дали сильный сигнал на рост конверсии.">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
     <style>
         * {
             margin: 0;
@@ -637,15 +637,15 @@
 <body>
     <header class="site-header">
         <div class="container header-inner">
-            <a href="/" class="logo">Мария&nbsp;Архипова</a>
+            <a href="../../" class="logo">Мария&nbsp;Архипова</a>
             <nav class="main-nav" aria-label="Главное меню">
                 <ul class="nav-list">
-                    <li><a href="#competencies">Что делаю</a></li>
-                    <li><a href="#cases">Кейсы</a></li>
-                    <li><a href="#reviews">Отзывы</a></li>
-                    <li><a href="#about">Обо&nbsp;мне</a></li>
-                    <li><a href="#formats">Форматы</a></li>
-                    <li><a href="#contact">Контакты</a></li>
+                    <li><a href="../../#competencies">Что делаю</a></li>
+                    <li><a href="../../#cases">Кейсы</a></li>
+                    <li><a href="../../#reviews">Отзывы</a></li>
+                    <li><a href="../../#about">Обо&nbsp;мне</a></li>
+                    <li><a href="../../#formats">Форматы</a></li>
+                    <li><a href="../../#contact">Контакты</a></li>
                 </ul>
             </nav>
             <div class="header-actions">
@@ -657,7 +657,7 @@
 
     <main class="site-main container">
         <div class="breadcrumb">
-            <a href="/">Главная</a> / <span>Доработка лендинга A на&nbsp;Tilda</span>
+            <a href="../../">Главная</a> / <span>Доработка лендинга A на&nbsp;Tilda</span>
         </div>
 
         <div class="case-hero-alt">
@@ -835,15 +835,17 @@
     <footer class="site-footer">
         <div class="container footer-inner">
             <div class="footer-brand">
-                <strong>Мария&nbsp;Архипова</strong>
+                <a href="../../" style="text-decoration: none; color: inherit;">
+                    <strong>Мария&nbsp;Архипова</strong>
+                </a>
                 <span>Маркетолог-автоматизатор</span>
                 <span>Превращаю экспертные продукты в&nbsp;рабочие цифровые системы</span>
             </div>
             <div class="footer-nav">
-                <a href="#competencies">Что делаю</a>
-                <a href="#cases">Кейсы</a>
-                <a href="#reviews">Отзывы</a>
-                <a href="#contact">Контакты</a>
+                <a href="../../#competencies">Что делаю</a>
+                <a href="../../#cases">Кейсы</a>
+                <a href="../../#reviews">Отзывы</a>
+                <a href="../../#contact">Контакты</a>
             </div>
             <!-- Юридический блок закомментирован
             <div class="footer-docs">
@@ -871,13 +873,15 @@
         (function() {
             const root = document.documentElement;
             const themeToggle = document.getElementById('themeToggle');
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            root.setAttribute('data-theme', savedTheme);
+            const savedTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            const initialTheme = savedTheme || systemTheme;
+            root.setAttribute('data-theme', initialTheme);
             function updateThemeIcon(theme) {
                 themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
                 themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему');
             }
-            updateThemeIcon(savedTheme);
+            updateThemeIcon(initialTheme);
             themeToggle.addEventListener('click', () => {
                 const current = root.getAttribute('data-theme');
                 const next = current === 'dark' ? 'light' : 'dark';

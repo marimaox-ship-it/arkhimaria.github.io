@@ -118,43 +118,45 @@
     .case-link:hover { text-decoration: underline; }
 
     .carousel-wrapper { position: relative; }
-    .carousel-track {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding: 12px 4px 16px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      cursor: grab;
-      scroll-behavior: smooth;
-    }
-    .carousel-track:active { cursor: grabbing; }
-    .carousel-track::-webkit-scrollbar { height: 4px; }
-    .carousel-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 12px 4px 16px;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.carousel-track:active { cursor: grabbing; }
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
 
-    .carousel-slide {
-      flex: 0 0 auto;
-      width: 260px;
-      scroll-snap-align: start;
-      border-radius: 20px;
-      overflow: hidden;
-      border: none;
-      background: var(--surface);
-    }
-    .carousel-slide img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
-    }
-    .carousel-caption { font-size: .8rem; color: var(--text-sec); text-align: center; margin-top: 10px; }
-    .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
-    .carousel-dot {
-      width: 8px; height: 8px; border-radius: 50%; background: var(--border);
-      border: none; cursor: pointer; transition: .25s; padding: 0;
-    }
-    .carousel-dot.active { background: var(--accent); width: 20px; border-radius: 4px; }
+.carousel-slide {
+  flex: 0 0 auto;
+  width: 260px;
+  scroll-snap-align: start;
+  border-radius: 20px;
+  overflow: hidden;
+  border: none;
+  background: var(--surface);
+}
+.carousel-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+.carousel-caption { font-size: .8rem; color: var(--text-sec); text-align: center; margin-top: 10px; }
+.carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.carousel-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--border);
+  border: none; cursor: pointer; transition: .25s; padding: 0;
+}
+.carousel-dot.active { background: var(--accent); width: 20px; border-radius: 4px; }
 
     /* FLOW SCHEME */
     .flow-scheme {

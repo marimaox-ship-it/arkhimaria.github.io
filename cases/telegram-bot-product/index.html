@@ -119,18 +119,34 @@
 
     .carousel-wrapper { position: relative; }
     .carousel-track {
-      display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
-      padding: 12px 4px 16px; -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; scroll-behavior: smooth;
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 12px 4px 16px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      cursor: grab;
+      scroll-behavior: smooth;
     }
-    .carousel-track::-webkit-scrollbar { display: none; }
+    .carousel-track:active { cursor: grabbing; }
+    .carousel-track::-webkit-scrollbar { height: 4px; }
+    .carousel-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
     .carousel-slide {
-      flex: 0 0 min(280px, 85vw); scroll-snap-align: center;
-      border-radius: 20px; overflow: hidden; border: none;
+      flex: 0 0 auto;
+      width: 260px;
+      scroll-snap-align: start;
+      border-radius: 20px;
+      overflow: hidden;
+      border: none;
       background: var(--surface);
     }
     .carousel-slide img {
-      width: 100%; height: auto; display: block; aspect-ratio: 9/19; object-fit: cover;
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
     }
     .carousel-caption { font-size: .8rem; color: var(--text-sec); text-align: center; margin-top: 10px; }
     .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
@@ -526,23 +542,9 @@
         <a href="../../#reviews">Отзывы</a>
         <a href="../../#contact">Контакты</a>
       </div>
-      <!-- Юридический блок закомментирован
-      <div class="footer-docs">
-        <a href="/legal/privacy/">Конфиденциальность</a>
-        <a href="/legal/offer/">Оферта</a>
-        <a href="/legal/cookies/">Cookies</a>
-      </div>
-      -->
       <div class="footer-copy">© <span id="year"></span> Мария&nbsp;Архипова. Все права защищены</div>
     </div>
   </footer>
-
-  <!-- Куки-блок закомментирован. Если потребуется, его можно раскомментировать и добавить стили и логику.
-  <div id="cookie-banner" class="cookie-banner" style="display: none;">
-    <p>Мы используем cookies для корректной работы сайта. Продолжая пользоваться сайтом, вы соглашаетесь с этим.</p>
-    <button id="cookie-accept" class="btn btn-sm">Принять</button>
-  </div>
-  -->
 
   <script>
     // Тема с автоопределением
@@ -576,63 +578,70 @@
       });
     }
 
-    // Карусель: свайп + точки + таймер
+    // Карусель: свайп + точки + таймер (исправленная)
     const track = document.getElementById('mockupCarousel');
     const dots = document.querySelectorAll('.carousel-dot');
     const wrapper = document.getElementById('carouselWrapper');
-    
+
     if(track && dots.length) {
       const slides = track.querySelectorAll('.carousel-slide');
       const total = slides.length;
       let current = 0;
       let autoTimer = null;
-      let isUserScrolling = false;
+      let isDragging = false;
 
       const getSlideWidth = () => slides[0].offsetWidth + 16;
 
       const goTo = (idx) => {
         current = ((idx % total) + total) % total;
-        track.scrollTo({ left: current * getSlideWidth(), behavior: 'smooth' });
+        const targetScroll = current * getSlideWidth();
+        track.scrollTo({ left: targetScroll, behavior: 'smooth' });
         dots.forEach((d, i) => d.classList.toggle('active', i === current));
       };
 
-      // Клик по точкам
-      dots.forEach(dot => {
+      // Обновление активной точки при скролле (без скачков)
+      let scrollTimeout;
+      track.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const newIndex = Math.round(track.scrollLeft / getSlideWidth());
+          if (newIndex !== current && newIndex >= 0 && newIndex < total) {
+            current = newIndex;
+            dots.forEach((d, i) => d.classList.toggle('active', i === current));
+            resetTimer();
+          }
+        }, 100);
+      }, { passive: true });
+
+      // Обработка кликов по точкам
+      dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
-          goTo(parseInt(dot.dataset.index));
+          goTo(index);
           resetTimer();
         });
       });
 
-      // Обновление точек при скролле (свайп)
-      track.addEventListener('scroll', () => {
-        if(!isUserScrolling) return;
-        const idx = Math.round(track.scrollLeft / getSlideWidth());
-        if(idx !== current) {
-          current = idx;
-          dots.forEach((d, i) => d.classList.toggle('active', i === current));
-        }
-      }, { passive: true });
-
-      track.addEventListener('touchstart', () => { isUserScrolling = true; pauseTimer(); }, { passive: true });
-      track.addEventListener('touchend', () => { 
-        isUserScrolling = false; 
-        goTo(Math.round(track.scrollLeft / getSlideWidth()));
-        resetTimer();
-      }, { passive: true });
-
       // Автопрокрутка
       const startTimer = () => {
+        if (autoTimer) clearInterval(autoTimer);
         autoTimer = setInterval(() => {
-          if(!isUserScrolling) goTo(current + 1);
+          if (!isDragging) {
+            goTo(current + 1);
+          }
         }, 4000);
       };
-      const pauseTimer = () => clearInterval(autoTimer);
-      const resetTimer = () => { pauseTimer(); startTimer(); };
+      const resetTimer = () => { startTimer(); };
 
       // Пауза при наведении
-      wrapper.addEventListener('mouseenter', pauseTimer);
-      wrapper.addEventListener('mouseleave', resetTimer);
+      wrapper.addEventListener('mouseenter', () => clearInterval(autoTimer));
+      wrapper.addEventListener('mouseleave', startTimer);
+      wrapper.addEventListener('touchstart', () => clearInterval(autoTimer), { passive: true });
+      wrapper.addEventListener('touchend', startTimer, { passive: true });
+
+      // Защита от скачков при ручном скролле
+      track.addEventListener('mousedown', () => { isDragging = true; clearInterval(autoTimer); });
+      track.addEventListener('mouseup', () => { isDragging = false; startTimer(); });
+      track.addEventListener('mouseleave', () => { isDragging = false; startTimer(); });
 
       startTimer();
     }
@@ -655,4 +664,3 @@
   </script>
 </body>
 </html>
-```

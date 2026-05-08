@@ -695,6 +695,36 @@
     steps.forEach(s => obs.observe(s));
 
     document.getElementById('year').textContent = new Date().getFullYear();
+    
+// ========== КНОПКА НАВЕРХ ==========
+(function() {
+  const btn = document.createElement('button');
+  btn.id = 'back-to-top';
+  btn.setAttribute('aria-label', 'Наверх');
+  btn.innerHTML = '↑';
+  document.body.appendChild(btn);
+  
+  const style = document.createElement('style');
+  style.textContent = `
+    #back-to-top {
+      position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: #fff; border: none; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0; pointer-events: none;
+      transform: translateY(10px); transition: all 0.3s ease; z-index: 90; font-size: 1.2rem;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #back-to-top:hover { filter: brightness(1.1); transform: translateY(-3px); }
+    @media (max-width: 768px) { #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; } }
+  `;
+  document.head.appendChild(style);
+  
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
+    
   </script>
 </body>
 </html>

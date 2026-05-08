@@ -1,10 +1,13 @@
+Вот исправленный код. Я внёс все правки: относительные пути для фавикона, хлебных крошек, ссылок в хедере и футере, добавил кнопку «Наверх», убрал рамку у карусели и настроил автоопределение темы.
+
+```html
 <!DOCTYPE html>
 <html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Кейс: Telegram-бот как цифровой продукт | Мария Архипова</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="../../favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -126,7 +129,7 @@
     .carousel-track::-webkit-scrollbar { display: none; }
     .carousel-slide {
       flex: 0 0 min(280px, 85vw); scroll-snap-align: center;
-      border-radius: 20px; overflow: hidden; border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden; border: none;
       background: var(--surface);
     }
     .carousel-slide img {
@@ -221,6 +224,17 @@
       opacity: 0.6;
       margin-top: 16px;
     }
+
+    /* BACK TO TOP */
+    #back-to-top {
+      position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: #fff; border: none; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0; pointer-events: none;
+      transform: translateY(10px); transition: all 0.3s ease; z-index: 90; font-size: 1.2rem;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #back-to-top:hover { filter: brightness(1.1); transform: translateY(-3px); }
     
     /* ========== RESPONSIVE ========== */
     @media(prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
@@ -268,6 +282,7 @@
         gap: 18px;
         align-items: center;
       }
+      #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; }
     }
     
     @media(max-width: 640px){
@@ -283,15 +298,15 @@
 
   <header>
     <div class="hdr">
-      <a href="/" class="logo">Мария&nbsp;Архипова</a>
+      <a href="../../" class="logo">Мария&nbsp;Архипова</a>
       <nav class="main-nav" aria-label="Главное меню">
         <ul class="nav-list">
-          <li><a href="#competencies">Что делаю</a></li>
-          <li><a href="#cases">Кейсы</a></li>
-          <li><a href="#reviews">Отзывы</a></li>
-          <li><a href="#about">Обо&nbsp;мне</a></li>
-          <li><a href="#formats">Форматы</a></li>
-          <li><a href="#contact">Контакты</a></li>
+          <li><a href="../../#competencies">Что делаю</a></li>
+          <li><a href="../../#cases">Кейсы</a></li>
+          <li><a href="../../#reviews">Отзывы</a></li>
+          <li><a href="../../#about">Обо&nbsp;мне</a></li>
+          <li><a href="../../#formats">Форматы</a></li>
+          <li><a href="../../#contact">Контакты</a></li>
         </ul>
       </nav>
       <div class="header-actions">
@@ -304,7 +319,7 @@
   <main>
     <div class="container" style="margin-top: 20px;">
       <div class="breadcrumb">
-        <a href="/">Главная</a>
+        <a href="../../">Главная</a>
         <span class="breadcrumb-sep">/</span>
         <span>Кейс: Telegram-бот как цифровой продукт</span>
       </div>
@@ -502,15 +517,17 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <strong>Мария&nbsp;Архипова</strong>
+        <a href="../../" style="text-decoration: none; color: inherit;">
+          <strong>Мария&nbsp;Архипова</strong>
+        </a>
         <span>Маркетолог-автоматизатор</span>
         <span>Превращаю экспертные продукты в&nbsp;рабочие цифровые системы</span>
       </div>
       <div class="footer-nav">
-        <a href="#competencies">Что делаю</a>
-        <a href="#cases">Кейсы</a>
-        <a href="#reviews">Отзывы</a>
-        <a href="#contact">Контакты</a>
+        <a href="../../#competencies">Что делаю</a>
+        <a href="../../#cases">Кейсы</a>
+        <a href="../../#reviews">Отзывы</a>
+        <a href="../../#contact">Контакты</a>
       </div>
       <!-- Юридический блок закомментирован
       <div class="footer-docs">
@@ -531,12 +548,17 @@
   -->
 
   <script>
-    // Тема
+    // Тема с автоопределением
     const themeToggle = document.getElementById('themeToggle');
     const htmlRoot = document.documentElement;
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    function setTheme(th) { htmlRoot.setAttribute('data-theme', th); themeToggle.textContent = th === 'light' ? '☀️' : '🌙'; localStorage.setItem('theme', th); }
-    setTheme(savedTheme);
+    const savedTheme = localStorage.getItem('theme');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    function setTheme(th) { 
+      htmlRoot.setAttribute('data-theme', th); 
+      themeToggle.textContent = th === 'light' ? '☀️' : '🌙'; 
+      localStorage.setItem('theme', th); 
+    }
+    setTheme(savedTheme || systemTheme);
     themeToggle.addEventListener('click', () => setTheme(htmlRoot.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
 
     // Mobile menu
@@ -619,7 +641,21 @@
     }
 
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 
+    // ========== КНОПКА НАВЕРХ ==========
+    (function() {
+      const btn = document.createElement('button');
+      btn.id = 'back-to-top';
+      btn.setAttribute('aria-label', 'Наверх');
+      btn.innerHTML = '↑';
+      document.body.appendChild(btn);
+      
+      window.addEventListener('scroll', () => {
+        btn.classList.toggle('visible', window.scrollY > 400);
+      });
+      btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    })();
+  </script>
 </body>
 </html>
+```

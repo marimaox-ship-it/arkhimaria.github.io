@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блог | Мария Архипова</title>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <meta name="description" content="Статьи о маркетинге, автоматизации, ботах, Tilda и продуктовых системах. Практика без воды.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ========== ПЕРЕМЕННЫЕ ========== */
+    :root {
+      --bg: #0B0C10; --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08); --text: #E5E7EB;
+      --text-sec: #9CA3AF; --accent: #14b8a6;
+      --accent-hover: #2dd4bf;
+      --accent-gradient: linear-gradient(90deg,#14b8a6,#f472b6,#f97316);
+      --card-hover-shadow: rgba(20,184,166,0.15);
+      --font: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --gap: 24px; --max: 1280px; --header-h: 64px; --footer-bg: #05060a;
+    }
+    [data-theme="light"] {
+      --bg: #F8F9FA; --surface: rgba(0,0,0,0.04);
+      --border: rgba(0,0,0,0.08); --text: #1F2937;
+      --text-sec: #6B7280; --accent: #0f766e;
+      --accent-hover: #0d9488;
+      --card-hover-shadow: rgba(13,148,136,0.12);
+      --footer-bg: #f1f5f9;
+    }
+
+    /* ========== БАЗА ========== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { max-width: 100vw; overflow-x: hidden; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); line-height: 1.6;
+      padding-top: var(--header-h); transition: background 0.3s, color 0.3s;
+      overflow-wrap: break-word;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { text-decoration: underline; color: var(--accent-hover); }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; width: 100%; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
+    .mono { font-family: var(--mono); font-size: .75rem; letter-spacing: .05em; color: var(--text-sec); text-transform: uppercase; }
+    .tag { display: inline-block; background: var(--surface); border: 1px solid var(--border); padding: 4px 12px; border-radius: 40px; font-size: .75rem; margin: 4px 4px 0 0; color: var(--accent); font-weight: 500; }
+    .tag:hover { border-color: var(--accent); }
+    
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; background: var(--accent); color: #fff; border-radius: 40px; text-decoration: none; font-weight: 500; transition: 0.2s; border: none; cursor: pointer; font-size: .95rem; white-space: nowrap; }
+    .btn:hover { filter: brightness(1.08); transform: translateY(-2px); text-decoration: none; color: #fff; }
+    .btn-outline { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+    .btn-outline:hover { background: var(--accent); color: #fff; }
+    
+    .section { padding: 90px 0 80px; border-bottom: 1px solid var(--border); }
+    .section:last-child { border: none; padding-bottom: 40px; }
+    .section h2 {
+      font-size: 2.1rem; font-weight: 600; margin: 0 0 28px;
+      position: relative; display: inline-block; line-height: 1.25; color: var(--accent);
+    }
+    .section h2::after {
+      content: ''; position: absolute; bottom: -10px; left: 0;
+      width: 56px; height: 2px; background: var(--accent-gradient); border-radius: 2px;
+    }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: .2s; min-width: 0; display: flex; flex-direction: column; }
+    .card:hover { border-color: var(--accent); box-shadow: 0 4px 24px var(--card-hover-shadow); transform: translateY(-3px); }
+    .card h3 { font-size: 1.15rem; margin: 12px 0 8px; line-height: 1.3; font-weight: 600; }
+    .card p { font-size: .9rem; color: var(--text-sec); margin-bottom: 12px; flex-grow: 1; }
+    .card .meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .card .tags { margin: 12px 0 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .card .read-more { color: var(--accent); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s; margin-top: auto; }
+    .card:hover .read-more { gap: 10px; }
+
+    /* HEADER */
+    .site-header { position: sticky; top: 0; left: 0; right: 0; height: var(--header-h); background: var(--bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; }
+    .hdr { display: flex; justify-content: space-between; align-items: center; max-width: var(--max); margin: 0 auto; padding: 0 20px; width: 100%; }
+    .logo { font-weight: 700; font-size: 1.25rem; color: var(--text); text-decoration: none; letter-spacing: -0.3px; }
+    .nav { display: flex; gap: 18px; align-items: center; }
+    .nav a { color: var(--text-sec); text-decoration: none; font-size: .9rem; transition: color 0.2s; }
+    .nav a:hover { color: var(--text); }
+    .theme-btn, .menu-btn { padding: 6px 10px; font-size: 1.1rem; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border); color: var(--text); cursor: pointer; flex-shrink: 0; transition: 0.2s; }
+    .theme-btn:hover, .menu-btn:hover { background: var(--surface); border-color: var(--accent); }
+    .menu-btn { display: none; }
+
+    /* FOOTER */
+    .site-footer { background: var(--footer-bg); padding: 48px 0 24px; margin-top: 40px; border-top: 1px solid var(--border); }
+    .footer-inner { display: grid; gap: 28px; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .footer-brand strong { font-size: 1.2rem; display: block; margin-bottom: 6px; }
+    .footer-brand span { display: block; color: var(--text-sec); }
+    .footer-nav, .footer-docs { display: flex; flex-wrap: wrap; gap: 20px; font-size: 0.9rem; }
+    .footer-nav a, .footer-docs a { color: var(--accent); text-decoration: none; transition: color 0.2s, opacity 0.2s; }
+    .footer-nav a:hover, .footer-docs a:hover { color: var(--accent); text-decoration: underline; opacity: 0.85; }
+    .footer-copy { text-align: center; font-size: 0.8rem; opacity: 0.6; margin-top: 16px; }
+
+    /* КНОПКА НАВЕРХ */
+    #back-to-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 99; }
+    #back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    #back-to-top:hover { filter: brightness(1.1); transform: translateY(-3px); }
+
+    /* АДАПТИВ */
+    @media(max-width: 768px) {
+      .container { padding: 0 16px; }
+      .section { padding: 60px 0 50px; }
+      .section h2 { font-size: 1.65rem; margin-bottom: 20px; }
+      .section h2::after { bottom: -8px; width: 40px; }
+      .footer-inner { grid-template-columns: 1fr !important; text-align: center; }
+      .site-footer { padding: 40px 0 20px; }
+      #back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 1rem; }
+      .nav { display: none; }
+      .menu-btn { display: flex; }
+    }
+    @media(max-width: 640px) {
+      .blog-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER как на статьях -->
+  <header class="site-header">
+    <div class="hdr">
+      <a href="../" class="logo">← На главную</a>
+      <nav class="nav">
+        <a href="../#competencies">Что делаю</a>
+        <a href="../#cases">Кейсы</a>
+        <a href="../#reviews">Отзывы</a>
+        <a href="../#about">Обо мне</a>
+        <a href="../#formats">Форматы</a>
+        <a href="../#contact">Контакты</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button id="themeToggle" class="theme-btn" aria-label="Переключить тему">🌙</button>
+        <button id="menuBtn" class="menu-btn" aria-label="Открыть меню">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- МОБИЛЬНОЕ МЕНЮ -->
+  <div id="mobileMenu" style="position:fixed;top:var(--header-h);left:0;right:0;bottom:0;background:var(--bg);padding:24px 20px;z-index:99;transform:translateX(100%);transition:transform .35s ease;display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border);">
+    <a href="../#competencies" style="font-size:1.15rem;color:var(--text);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--border);">Что делаю</a>
+    <a href="../#cases" style="font-size:1.15rem;color:var(--text);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--border);">Кейсы</a>
+    <a href="../#reviews" style="font-size:1.15rem;color:var(--text);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--border);">Отзывы</a>
+    <a href="../#about" style="font-size:1.15rem;color:var(--text);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--border);">Обо мне</a>
+    <a href="../#formats" style="font-size:1.15rem;color:var(--text);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--border);">Форматы</a>
+    <a href="../#contact" style="font-size:1.15rem;color:var(--text);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--border);">Контакты</a>
+    <a href="https://t.me/ArkhiMaria" style="color:var(--accent);font-weight:500;border:none;margin-top:10px;padding:16px 0;">Обсудить задачу</a>
+  </div>
+
+  <!-- ЗАГОЛОВОК БЛОГА -->
+  <section class="section">
+    <div class="container grid">
+      <div style="grid-column: 1 / -1;">
+        <h2>Блог</h2>
+        <p style="color:var(--text-sec); max-width:720px; margin-bottom:32px;">
+          Заметки о маркетинге, автоматизации, ботах, Tilda и продуктовых системах. Без воды, с примерами из реальных проектов.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- СПИСОК СТАТЕЙ -->
+  <section class="section" style="padding-top:0;">
+    <div class="container grid">
+      <div class="blog-grid" style="grid-column: 1 / -1; display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap);">
+        
+        <!-- 🆕 Статья 1: Сайт + 152-ФЗ (Январь 2026) -->
+        <article class="card">
+          <div class="meta"><span class="mono">15 янв 2026</span><span class="mono">8 мин</span></div>
+          <h3>Как привести сайт в соответствие с ФЗ о персональных данных: формы, cookie, домен и Роскомнадзор</h3>
+          <p>Чек-лист для проверки юридико-технического блока сайта в 2026 году: формы, согласия, cookie, домен, заявки, CRM, боты и уведомление в Роскомнадзор.</p>
+          <div class="tags">
+            <span class="tag">152-ФЗ</span><span class="tag">Сайт</span><span class="tag">Юридический блок</span>
+          </div>
+          <a href="posts/legal-check-2026/" class="read-more">Читать →</a>
+        </article>
+
+        <!-- 🆕 Статья 2: Бот + 152-ФЗ (Январь 2026) -->
+        <article class="card">
+          <div class="meta"><span class="mono">20 янв 2026</span><span class="mono">5 мин</span></div>
+          <h3>Бот тоже собирает персональные данные: как подготовить Telegram- или VK-бота к 152-ФЗ</h3>
+          <p>Чек-лист для бота: согласие на старте, сбор данных, зарубежные сервисы, локализация, связка с сайтом и CRM.</p>
+          <div class="tags">
+            <span class="tag">Боты</span><span class="tag">152-ФЗ</span><span class="tag">Персональные данные</span>
+          </div>
+          <a href="posts/bot-152fz/" class="read-more">Читать →</a>
+        </article>
+
+        <!-- Статья 3 (заглушка) -->
+        <!--
+        <article class="card">
+          <div class="meta"><span class="mono">12 окт 2024</span><span class="mono">4 мин</span></div>
+          <h3>Почему боты не продают, даже если в них 50 кнопок</h3>
+          <p>Разбираю типичные ошибки в сценариях Telegram-ботов: где пользователи теряются, почему закрывают диалог и как вернуть внимание без спама.</p>
+          <div class="tags">
+            <span class="tag">Боты</span><span class="tag">UX</span><span class="tag">Сценарии</span>
+          </div>
+          <a href="posts/bot-doesnt-sell/" class="read-more">Читать →</a>
+        </article>
+        -->
+
+        <!-- Статья 4 (заглушка) -->
+        <!--
+        <article class="card">
+          <div class="meta"><span class="mono">28 сен 2024</span><span class="mono">6 мин</span></div>
+          <h3>Как я упаковала клуб в Telegram за 3 недели</h3>
+          <p>Пошаговый разбор инфраструктуры: доступы, оплаты, напоминания, баллы и метрики. Что автоматизировать сразу, а что оставить на потом.</p>
+          <div class="tags">
+            <span class="tag">Кейсы</span><span class="tag">Автоматизация</span><span class="tag">Клубы</span>
+          </div>
+          <a href="posts/club-in-telegram/" class="read-more">Читать →</a>
+        </article>
+        -->
+
+        <!-- Статья 5 (заглушка) -->
+        <!--
+        <article class="card">
+          <div class="meta"><span class="mono">02 авг 2024</span><span class="mono">7 мин</span></div>
+          <h3>Tilda, BotHunter и UniSender: как связать три сервиса без боли</h3>
+          <p>Техническая инструкция по настройке сквозной цепочки: заявка → оплата → доступ → рассылка. Где ломаются данные и как это чинить.</p>
+          <div class="tags">
+            <span class="tag">Интеграции</span><span class="tag">Tilda</span><span class="tag">Рассылки</span>
+          </div>
+          <a href="posts/integration-chain/" class="read-more">Читать →</a>
+        </article>
+        -->
+
+        <!-- Статья 6 (заглушка) -->
+        <!--
+        <article class="card">
+          <div class="meta"><span class="mono">18 июл 2024</span><span class="mono">3 мин</span></div>
+          <h3>5 вопросов, которые я задаю перед сборкой любого бота</h3>
+          <p>Чек-лист предпроектного анализа: что спрашивать у клиента, как проверить идею на прочность и избежать переделки через месяц.</p>
+          <div class="tags">
+            <span class="tag">Процессы</span><span class="tag">Анализ</span><span class="tag">Боты</span>
+          </div>
+          <a href="posts/5-bot-questions/" class="read-more">Читать →</a>
+        </article>
+        -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER как на статьях -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="../" style="text-decoration:none;color:inherit;"><strong>Мария Архипова</strong></a>
+        <span>Маркетолог-автоматизатор</span>
+        <span>Превращаю экспертные продукты в рабочие цифровые системы</span>
+      </div>
+      <div class="footer-nav">
+        <a href="../#competencies">Что делаю</a>
+        <a href="../#cases">Кейсы</a>
+        <a href="../#reviews">Отзывы</a>
+        <a href="../#contact">Контакты</a>
+      </div>
+      <!-- <div class="footer-docs">
+        <a href="../legal/privacy/">Конфиденциальность</a>
+        <a href="../legal/offer/">Оферта</a>
+        <a href="../legal/cookies/">Cookies</a>
+      </div> -->
+      <div class="footer-copy">© <span id="footerYear"></span> Мария Архипова. Все права защищены</div>
+    </div>
+  </footer>
+
+  <button id="back-to-top" aria-label="Наверх">↑</button>
+
+  <script>
+    // ========== ТЕМНАЯ/СВЕТЛАЯ ТЕМА ==========
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    function applyTheme(theme) { html.setAttribute('data-theme', theme); themeToggle.textContent = theme === 'light' ? '☀️' : '🌙'; localStorage.setItem('theme', theme); }
+    applyTheme(savedTheme || (systemPrefersLight ? 'light' : 'dark'));
+    themeToggle.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
+
+    // ========== МОБИЛЬНОЕ МЕНЮ ==========
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenu.style.transform === 'translateX(0px)';
+        mobileMenu.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0)';
+        menuBtn.textContent = isOpen ? '☰' : '✕';
+        document.body.style.overflow = isOpen ? '' : 'hidden';
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => { mobileMenu.style.transform = 'translateX(100%)'; menuBtn.textContent = '☰'; document.body.style.overflow = ''; });
+      });
+    }
+
+    // ========== КНОПКА "НАВЕРХ" ==========
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 400), { passive: true });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ========== ГОД В ФУТЕРЕ ==========
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

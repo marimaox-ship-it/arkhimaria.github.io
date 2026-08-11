@@ -221,6 +221,8 @@
     .reviews-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); margin-top: 8px; }
     .review-card { display: flex; flex-direction: column; gap: 16px; }
     .review-text { color: var(--text); font-size: 0.95rem; line-height: 1.7; overflow-wrap: anywhere; }
+    .review-card-featured { grid-column: 1 / -1; }
+    .review-card-featured .review-text { max-width: 980px; font-size: 1.05rem; }
     .review-author { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
     .review-author span { color: var(--text-sec); font-size: 0.9rem; }
     .review-tags { margin-top: 4px; }
@@ -451,6 +453,15 @@
     <div class="container grid">
       <div style="grid-column: span 12;"><h2>Избранные кейсы</h2><p class="cases-intro">Здесь задачи, которые мне особенно интересно решать: от упаковки методики до точечной работы с конверсией и аналитикой</p></div>
       <div class="cases-grid">
+        <!-- Кейс: Столешница 77 -->
+        <div class="card case-card">
+          <img src="cases/stoleshnica77-conversion/stoleshnica77-home.jpg" alt="Первый экран обновленного сайта Столешница 77" class="case-img">
+          <h3>Как сайт стал приносить на 83% больше обращений</h3>
+          <span class="mono">WordPress • путь клиента • конверсия</span>
+          <p>Маркетинговая переработка сайта дала на 83% больше обращений и в 4 раза больше заявок в работе при трафике на 48% меньше</p>
+          <div class="case-tags"><span class="tag">WordPress</span><span class="tag">Яндекс Метрика</span><span class="tag">Вебвизор</span><span class="tag">Путь клиента</span></div>
+          <a href="cases/stoleshnica77-conversion/" class="btn btn-outline btn-sm case-btn">Смотреть кейс</a>
+        </div>
         <!-- Кейс 1 -->
         <div class="card case-card">
           <img src="assets/images/szs.webp" alt="Инфраструктура эксперта в нише здоровья" class="case-img">
@@ -552,6 +563,11 @@
     <div class="container grid">
       <div style="grid-column: span 12;"><h2>Что говорят клиенты</h2></div>
       <div class="reviews-grid">
+        <div class="card review-card review-card-featured">
+          <p class="review-text">«Большое спасибо Марии за проделанную работу! Задача была увеличить заявки, продажи и чтобы сайт работал, а не просто был. Была проведена аналитика и разбор всего, что мешало приносить результат. Мария очень подробно, до мелочей, всё расписывала: что нужно, что полезно. Сделано очень много. Сайт стал не просто приятным, но и рабочим: заявки, звонки, всё заработало. Результат был прям как небо и земля. Очень доволен работой, планирую и дальше сотрудничать с Марией»</p>
+          <div class="review-author"><strong>Виталий</strong><span>Владелец компании «Столешница 77»</span></div>
+          <div class="review-tags"><span class="tag">WordPress</span><span class="tag">Путь клиента</span><span class="tag">Конверсия</span></div>
+        </div>
         <div class="card review-card"><p class="review-text">«Фактически Мария с нуля создала инфраструктуру моих продуктов. Причём не только технически. На данный момент у меня работает постоянный клуб на основе чат-бота, созданного Марией»</p><div class="review-author"><strong>Елена Д.</strong><span>Эксперт в нише здоровья и телесных практик</span></div><div class="review-tags"><span class="tag">Инфраструктура продуктов</span><span class="tag">Боты</span><span class="tag">Рассылки</span></div></div>
         <div class="card review-card"><p class="review-text">«Мария с самого начала была максимально вовлечена в процесс: уточняла задачу, предлагала свои идеи и решения. Бот работает стабильно, аккуратно реализован функционал, учтены все детали»</p><div class="review-author"><strong>Татьяна В.</strong><span>Автор и основатель Telegram-бота по работе с тревожностью и паническими атаками</span></div><div class="review-tags"><span class="tag">Telegram-бот</span><span class="tag">Сценарии</span><span class="tag">Запуск</span></div></div>
         <div class="card review-card"><p class="review-text">«Мария отличный исполнитель! Быстро вникает в задачу, предлагает решения, всё выполняет в срок и находит проблемные точки, которые мы пропустили»</p><div class="review-author"><strong>Ксения К.</strong><span>Операционный менеджер проекта на Tilda</span></div><div class="review-tags"><span class="tag">Tilda</span><span class="tag">Поддержка сайта</span><span class="tag">Проблемные точки</span></div></div>
